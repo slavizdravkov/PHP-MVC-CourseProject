@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="heading-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1>Регистрация</h1>
+                </div>
+
+                {% if app.session.flashBag.has('success') %}
+                    <div class="col-md-5">
+                        <ul class="breadcrumb">
+                            {% for msg in app.session.flashBag.get('success') %}
+                                <li>
+                                    {{ msg }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            {{ form_start(formUser, {'action': path('user_register')}) }}
+            <div class="col-md-6">
+                <div class="box">
+                    {{ form_row(formUser.firstName) }}
+                    {{ form_row(formUser.lastName) }}
+                    {{ form_row(formUser.city) }}
+                    {{ form_row(formUser.address) }}
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="box">
+                    {{ form_row(formUser.email) }}
+                    {{ form_row(formUser.password) }}
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-template-main"><i class="fa fa-user-md"></i> Регистрация/Влизане</button>
+            </div>
+
+            {{ form_end(formUser) }}
+
+        </div>
+    </div>
+
+{% endblock %}

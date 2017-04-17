@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="heading-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1>{{ product.name }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="container">
+
+            <div class="row">
+
+                <!-- *** LEFT COLUMN ***
+        _________________________________________________________ -->
+
+                <div class="col-md-9">
+
+                    <div class="row" id="productMain">
+                        <div class="col-sm-6">
+                            <div id="mainImage">
+                                <img src="{{ asset('uploads/images/' ~ product.imageUrl) }}" alt="" class="img-responsive">
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="box">
+
+                                <form>
+                                    <div class="sizes">
+
+                                        <h3>Available sizes</h3>
+
+                                    </div>
+
+                                    <p class="price">{{ product.price }}</p>
+
+                                    <p class="text-center">
+                                        <button type="submit" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                                    </p>
+
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="box" id="details">
+                        <p>
+                        <h4>Описание на продукта</h4>
+                        <p>{{ product.description }}</p>
+                        <h4>Размер</h4>
+                        <p>{{ product.size }}</p>
+                    </div>
+
+                </div>
+                <!-- /.col-md-9 -->
+
+
+                <!-- *** LEFT COLUMN END *** -->
+
+                <!-- *** RIGHT COLUMN ***
+      _________________________________________________________ -->
+
+                <div class="col-sm-3">
+
+                    <!-- *** MENUS AND FILTERS ***
+_________________________________________________________ -->
+                    <div class="panel panel-default sidebar-menu">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Категории</h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <ul class="nav nav-pills nav-stacked category-menu">
+                                {% for category in categories %}
+                                    {% if product.category.name == category.name %}
+                                        <li class="active">
+                                            <a href="{{ path('products_by_category', {'id': category.id}) }}">{{ category.name }} <span class="badge pull-right"></span></a>
+                                        </li>
+                                    {% else %}
+                                        <li>
+                                            <a href="{{ path('products_by_category', {'id': category.id}) }}">{{ category.name }} <span class="badge pull-right"></span></a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

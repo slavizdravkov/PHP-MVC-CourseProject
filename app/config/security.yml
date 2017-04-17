@@ -1,0 +1,44 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
+security:
+    encoders:
+        OnlineShopBundle\Entity\User:
+            algorithm: bcrypt
+
+    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        database_user:
+            entity:
+                class: OnlineShopBundle:User
+                property: email
+
+    role_hierarchy:
+        ROLE_EDITOR: ROLE_USER
+        ROLE_ADMIN: [ROLE_EDITOR, ROLE_ALLOWED_TO_SWITCH]
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: ~
+            pattern: ^/
+            provider: database_user
+            form_login:
+                login_path: user_login
+                check_path: user_login
+            logout:
+                path: user_logout
+                target: homepage
+            # activate different ways to authenticate
+
+            # http_basic: ~
+            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: ~
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+    access_control:
+        - { path: ^/register , roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login , roles: IS_AUTHENTICATED_ANONYMOUSLY }

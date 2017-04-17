@@ -1,0 +1,18 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+    app.image_uploader:
+        class: OnlineShopBundle\FileUploader
+        arguments: ["%images_directory%"]
+    app.doctrine_image_listener:
+        class: OnlineShopBundle\EventListener\ImageUploadListener
+        arguments: ["@app.image_uploader"]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist}
+            - { name: doctrine.event_listener, event: preUpdate}
+#    service_name:
+#        class: OnlineShopBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
