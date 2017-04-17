@@ -6,12 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * City
+ * Role
  *
- * @ORM\Table(name="cities")
- * @ORM\Entity(repositoryClass="OnlineShopBundle\Repository\CityRepository")
+ * @ORM\Table(name="roles")
+ * @ORM\Entity(repositoryClass="OnlineShopBundle\Repository\RoleRepository")
  */
-class City
+class Role
 {
     /**
      * @var int
@@ -30,12 +30,16 @@ class City
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="OnlineShopBundle\Entity\User", mappedBy="city")
-     *
      * @var User[]|ArrayCollection
+     *
+     *
      */
     private $users;
 
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -52,7 +56,7 @@ class City
      *
      * @param string $name
      *
-     * @return City
+     * @return Role
      */
     public function setName($name)
     {
@@ -72,25 +76,11 @@ class City
     }
 
     /**
-     * @return ArrayCollection|User[]
+     * @return string|null
      */
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
-    /**
-     * @param ArrayCollection|User[] $users
-     */
-    public function setUsers($users)
-    {
-        $this->users = $users;
-    }
-
-    function __toString(): string
+    public function getRole()
     {
         return $this->getName();
     }
-
 }
 

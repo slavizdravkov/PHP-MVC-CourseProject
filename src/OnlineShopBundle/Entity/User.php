@@ -2,20 +2,18 @@
 
 namespace OnlineShopBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
  *
- * @ORM\Table(name="user")
+ * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="OnlineShopBundle\Repository\UserRepository")
  */
 class User implements UserInterface
 {
-    const ROLE_USER = 'ROLE_USER';
-    const ROLE_EDITOR = 'ROLE_EDITOR';
-    const ROLE_ADMIN = 'ROLE_ADMIN';
 
     /**
      * @var int
@@ -84,14 +82,19 @@ class User implements UserInterface
     private $deletedOn;
 
     /**
-     * @ORM\Column(name="role", type="string", length=255)
+     * @var Role[]|ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="OnlineShopBundle\Entity\Role")
+     * @ORM\JoinTable(name="users_roles",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")})
      */
-    private $role;
-
+    private $roles;
 
     public function __construct()
     {
         $this->banned = 'no';
+        $this->roles = new ArrayCollection();
     }
 
 
@@ -308,7 +311,26 @@ class User implements UserInterface
      */
     public function getRoles()
     {
-        // TODO: Implement getRoles() method.
+        /** @var Role $rolesAsStringArray */
+        $rolesAsStringArray = [];
+
+        foreach ($this->roles as $role) {
+            $rolesAsStringArray[] = is_string($role) ? $role : $role->getRole();
+        }
+
+        return $rolesAsStringArray;
+    }
+
+    /**
+     * @param Role $role
+     *
+     * @return User
+     */
+    public function addRole(Role $role)
+    {
+        $this->roles[] = $role;
+
+        return $this;
     }
 
     /**
@@ -343,5 +365,17 @@ class User implements UserInterface
     {
         // TODO: Implement eraseCredentials() method.
     }
+
+    /**
+     * @param ArrayCollection|Role[] $roles
+     * @return $this
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
 }
 
