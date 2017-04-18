@@ -22,7 +22,7 @@ class UserType extends AbstractType
             ->add('city', null, ['label' => 'Град', 'placeholder' => 'Избери град'])
             ->add('address', TextareaType::class, ['label' => 'Адрес'])
             ->add('email', EmailType::class)
-            ->add('password', RepeatedType::class,
+            ->add('plainPassword', RepeatedType::class,
                 [
                     'type' => PasswordType::class,
                     'first_options' => ['label' => 'Парола'],

@@ -39,12 +39,12 @@
             <div class="col-md-6">
                 <div class="box">
                     {{ form_row(formUser.email) }}
-                    {{ form_row(formUser.password) }}
+                    {{ form_row(formUser.plainPassword) }}
                 </div>
             </div>
 
             <div class="text-center">
-                <button type="submit" class="btn btn-template-main"><i class="fa fa-user-md"></i> Регистрация/Влизане</button>
+                <button type="submit" class="btn btn-template-main"><i class="fa fa-user-md"></i> Регистрация</button>
             </div>
 
             {{ form_end(formUser) }}

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="heading-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1>Вход</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="box">
+
+                    <hr>
+
+                    <form action="{{ path('user_login') }}" method="post">
+                        <div class="form-group">
+                            <label for="email">Имейл адрес</label>
+                            <input type="text" class="form-control" id="email" name="_username" value="{{ last_username }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Парола</label>
+                            <input type="password" class="form-control" id="password" name="_password">
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-template-main"><i class="fa fa-sign-in"></i> Вход</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -33,8 +33,12 @@
                             <div class="col-xs-12">
 
                                 <div class="login">
-                                    <a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Влез в акаунт</span></a>
-                                    <a href="{{ path('user_register') }}"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">Регистрация</span></a>
+                                    {% if app.user %}
+                                        <a href="{{ path('user_logout') }}"><i class="fa fa-sign-out"></i> Изход</a>
+                                    {% else %}
+                                        <a href="{{ path('user_login') }}"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Влез в акаунт</span></a>
+                                        <a href="{{ path('user_register') }}"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">Регистрация</span></a>
+                                    {% endif %}
                                 </div>
 
                             </div>

@@ -4,13 +4,16 @@ namespace OnlineShopBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
  *
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="OnlineShopBundle\Repository\UserRepository")
+ * @UniqueEntity("email")
  */
 class User implements UserInterface
 {
@@ -28,6 +31,9 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, unique=true)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Email(message="Въведения мейл адрес '{{ value }}' не е валиден")
      */
     private $email;
 
@@ -41,7 +47,16 @@ class User implements UserInterface
     /**
      * @var string
      *
+     * @Assert\NotBlank()
+     */
+    private $plainPassword;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="first_name", type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
     private $firstName;
 
@@ -49,12 +64,15 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="last_name", type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
     private $lastName;
 
     /**
      * @ORM\ManyToOne(targetEntity="OnlineShopBundle\Entity\City", inversedBy="users")
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @Assert\NotBlank()
      *
      * @var City
      */
@@ -64,6 +82,8 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="address", type="text")
+     *
+     * @Assert\NotBlank()
      */
     private $address;
 
@@ -93,7 +113,7 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->banned = 'no';
+        //$this->banned = 'no';
         $this->roles = new ArrayCollection();
     }
 
@@ -375,6 +395,22 @@ class User implements UserInterface
         $this->roles = $roles;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param string $plainPassword
+     */
+    public function setPlainPassword(string $plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
     }
 
 }
