@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="heading-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1>Списък на продуктите</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="container">
+
+
+            <div class="row">
+
+                <!-- *** LEFT COLUMN ***
+         _________________________________________________________ -->
+
+                <div class="col-md-12">
+
+                    <div class="box">
+
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Снимка</th>
+                                    <th>ID</th>
+                                    <th>Категория</th>
+                                    <th>Име</th>
+                                    <th>Описание</th>
+                                    <th>Количество</th>
+                                    <th>Цена</th>
+                                    <th>Добавен на</th>
+                                    <th>Действие</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for product in products %}
+                                        <tr>
+                                            <td><img src="{{ asset('uploads/images/' ~ product.imageUrl) }}" alt="" class="image" width="30 px"></td>
+                                            <th># {{ product.id }}</th>
+                                            <td>{{ product.category }}</td>
+                                            <td>{{ product.name }}</td>
+                                            <td>{{ product.description }}</td>
+                                            <td align="center">{{ product.quantity }}</td>
+                                            <td align="right">{{ product.price }} лв.</td>
+                                            <td align="center">{{ product.createdOn|date('d-m-Y') }}</td>
+                                            <td>
+                                                <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-template-main btn-sm">Редакция</a>
+                                                <a href="{{ path('product_delete', {'id': product.id}) }}" class="btn btn-template-main btn-sm">Изтриване</a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+
+                    </div>
+                    <!-- /.box -->
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /#content -->
+
+{% endblock %}
+

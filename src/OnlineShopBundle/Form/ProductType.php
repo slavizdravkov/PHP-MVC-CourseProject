@@ -22,7 +22,12 @@ class ProductType extends AbstractType
             ->add('size', TextType::class, array('label' => 'Размер'))
             ->add('quantity', IntegerType::class, array('label' => 'Количество'))
             ->add('price', MoneyType::class, array('label' => 'Цена', 'currency' => 'BGN'))
-            ->add('imageUrl', FileType::class, array('label' => 'Снимка (jpeg, png, tif файл)'))
+            ->add('imageUrl', FileType::class,
+                [
+                    'label' => 'Снимка (jpeg, png, tif файл)',
+                    'data_class' => null,
+                    'required' => false
+                ])
             ->add('category', null,
                     [
                         'label' => 'Категория',

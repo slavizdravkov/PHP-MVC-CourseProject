@@ -77,10 +77,16 @@ class Product
     private $deletedOn;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_on", type="datetime")
+     */
+    private $createdOn;
+
+    /**
      *
      * @ORM\Column(name="image_url", type="string", length=255)
      *
-     * @Assert\NotBlank(message="Моля, прикачете снимка за продукта")
      * @Assert\Image(mimeTypes={"image/jpeg", "image/png"})
      */
     private $imageUrl;
@@ -92,6 +98,11 @@ class Product
      * @var Category
      */
     private $category;
+
+    public function __construct()
+    {
+        $this->createdOn = new \DateTime('now');
+    }
 
     /**
      * Get id
@@ -273,6 +284,22 @@ class Product
         $this->imageUrl = $imageUrl;
 
         return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedOn()
+    {
+        return $this->createdOn;
+    }
+
+    /**
+     * @param \DateTime $createdOn
+     */
+    public function setCreatedOn(\DateTime $createdOn)
+    {
+        $this->createdOn = $createdOn;
     }
 
 }

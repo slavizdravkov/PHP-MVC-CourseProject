@@ -2,18 +2,19 @@
 
 namespace OnlineShopBundle\Controller\Admin;
 
-use OnlineShopBundle\Entity\Category;
 use OnlineShopBundle\Entity\Product;
 use OnlineShopBundle\Form\ProductType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
     /**
-     * @Route("/create/product", name="create_product")
+     * @Route("/admin/create/product", name="create_product")
      * @Method("GET")
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -31,7 +32,7 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/create/product", name="create_product_process")
+     * @Route("/admin/create/product", name="create_product_process")
      * @Method("POST")
      *
      * @param Request $request
@@ -65,18 +66,92 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/product/view/{id}", name="view_product")
      *
-     * @param $id
+     * @Route("/admin/products/list", name="products_list")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function productView($id)
+    public function listProducts()
     {
-        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+        $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
 
-        $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
-
-        return $this->render('product/view.html.twig', ['product' => $product, 'categories' => $categories]);
+        return $this->render('admin/products/list.html.twig', ['products' => $products]);
     }
+
+    /**
+     * @Route("/admin/product/edit/{id}", name="product_edit")
+     *
+     * @param Request $request
+     * @param $id
+     *
+     * @return Response
+     */
+    public function editProduct(Request $request, $id)
+    {
+        $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
+        $oldImageName = $product->getImageUrl();
+
+//        $product->setImageUrl(
+//            new File($this->getParameter('images_directory') . '/' . $product->getImageUrl()));
+
+        $editForm = $this->createForm(ProductType::class, $product);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            if ($product->getImageUrl() instanceof UploadedFile) {
+                $file = $product->getImageUrl();
+                $fileName = $this->get('app.image_uploader')->upload($file);
+
+                if ($oldImageName) {
+
+                    $this->get('app.image_uploader')->remove($oldImageName);
+                }
+
+                $product->setImageUrl($fileName);
+            } else {
+                $product->setImageUrl($oldImageName);
+            }
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('products_list');
+        }
+
+        return $this->render('admin/products/edit.html.twig',
+            [
+                'product' => $product,
+                'editForm' => $editForm->createView()
+            ]);
+    }
+
+    /**
+     * @Route("/admin/product/delete/{id}", name="product_delete")
+     *
+     * @param Request $request
+     * @param Product $product
+     *
+     * @return Response
+     */
+    public function deleteProduct(Request $request, Product $product)
+    {
+        $imageName = $product->getImageUrl();
+        $deleteForm = $this->createForm(ProductType::class, $product);
+        $deleteForm->handleRequest($request);
+
+        if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
+            if ($imageName) {
+                $this->get('app.image_uploader')->remove($imageName);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($product);
+            $em->flush();
+
+            return $this->redirectToRoute('products_list');
+        }
+
+        return $this->render('admin/products/delete.html.twig', ['deleteForm' => $deleteForm->createView()]);
+    }
+
 }
