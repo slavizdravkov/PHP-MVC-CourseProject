@@ -1,6 +1,6 @@
 <?php
 
-namespace OnlineShopBundle\Controller;
+namespace OnlineShopBundle\Controller\Admin;
 
 use OnlineShopBundle\Entity\Category;
 use OnlineShopBundle\Form\CategoryType;
