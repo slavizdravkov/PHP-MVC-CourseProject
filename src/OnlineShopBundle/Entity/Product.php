@@ -93,7 +93,7 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity="OnlineShopBundle\Entity\Category", inversedBy="products")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="SET NULL")
      *
      * @var Category
      */

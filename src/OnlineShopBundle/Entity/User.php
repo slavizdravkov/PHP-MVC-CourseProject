@@ -71,7 +71,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="OnlineShopBundle\Entity\City", inversedBy="users")
-     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id", onDelete="SET NULL")
      * @Assert\NotBlank()
      *
      * @var City
@@ -88,18 +88,13 @@ class User implements UserInterface
     private $address;
 
     /**
-     * @var bool
+     * @ORM\ManyToOne(targetEntity="OnlineShopBundle\Entity\UserStatus", inversedBy="users")
+     * @ORM\JoinColumn(name="status_id", referencedColumnName="id", onDelete="SET NULL")
+     * @Assert\NotBlank()
      *
-     * @ORM\Column(name="banned", type="string", columnDefinition="SET('yes', 'no')")
+     * @var UserStatus
      */
-    private $banned;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="deleted_on", type="datetime", nullable=true)
-     */
-    private $deletedOn;
+    private $status;
 
     /**
      * @var Role[]|ArrayCollection
@@ -249,54 +244,6 @@ class User implements UserInterface
     }
 
     /**
-     * Set banned
-     *
-     * @param boolean $banned
-     *
-     * @return User
-     */
-    public function setBanned($banned)
-    {
-        $this->banned = $banned;
-
-        return $this;
-    }
-
-    /**
-     * Get banned
-     *
-     * @return bool
-     */
-    public function getBanned()
-    {
-        return $this->banned;
-    }
-
-    /**
-     * Set deletedOn
-     *
-     * @param \DateTime $deletedOn
-     *
-     * @return User
-     */
-    public function setDeletedOn($deletedOn)
-    {
-        $this->deletedOn = $deletedOn;
-
-        return $this;
-    }
-
-    /**
-     * Get deletedOn
-     *
-     * @return \DateTime
-     */
-    public function getDeletedOn()
-    {
-        return $this->deletedOn;
-    }
-
-    /**
      * @return City
      */
     public function getCity()
@@ -331,10 +278,10 @@ class User implements UserInterface
      */
     public function getRoles()
     {
-        /** @var Role $rolesAsStringArray */
         $rolesAsStringArray = [];
 
         foreach ($this->roles as $role) {
+            /** @var Role $role */
             $rolesAsStringArray[] = is_string($role) ? $role : $role->getRole();
         }
 
@@ -411,6 +358,43 @@ class User implements UserInterface
     public function setPlainPassword(string $plainPassword)
     {
         $this->plainPassword = $plainPassword;
+    }
+
+    /**
+     * @return UserStatus
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param UserStatus $status
+     */
+    public function setStatus(UserStatus $status)
+    {
+        $this->status = $status;
+    }
+
+
+    public function isAdmin()
+    {
+        return in_array("ROLE_ADMIN", $this->getRoles());
+    }
+
+    public function isEditor()
+    {
+        return in_array("ROLE_EDITOR", $this->getRoles());
+    }
+
+    public function getFullName()
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName();
+    }
+
+    public function getRolesAsString()
+    {
+        return implode(", ", $this->getRoles());
     }
 
 }

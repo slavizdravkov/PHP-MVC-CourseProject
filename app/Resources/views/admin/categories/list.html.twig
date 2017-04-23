@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="heading-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1>Списък на категориите</h1>
+                </div>
+
+                {% if app.session.flashBag.has('success') %}
+                    <div class="col-md-5">
+                        <ul class="breadcrumb">
+                            {% for msg in app.session.flashBag.get('success') %}
+                                <li>
+                                    {{ msg }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="container">
+
+
+            <div class="row">
+
+                <!-- *** LEFT COLUMN ***
+         _________________________________________________________ -->
+
+                <div class="col-md-12">
+
+                    <div class="box">
+
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Име</th>
+                                    <th>Действие</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for category in categories %}
+                                    <tr>
+                                        <th>{{ category.id }}</th>
+                                        <td>{{ category.name }}</td>
+                                        <td>
+                                            <a href="{{ path('categories_edit', {'id': category.id}) }}" class="btn btn-template-main btn-sm">Редакция</a>
+                                            <a href="{{ path('categories_delete', {'id': category.id}) }}" class="btn btn-template-main btn-sm">Изтриване</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+
+                    </div>
+                    <!-- /.box -->
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /#content -->
+
+{% endblock %}
+

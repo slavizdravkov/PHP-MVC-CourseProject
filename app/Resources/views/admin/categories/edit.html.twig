@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-7">
-                    <h1>Редактиране на продукт</h1>
+                    <h1>Редактиране на категория</h1>
                 </div>
             </div>
         </div>
@@ -20,22 +20,16 @@
 
                     {{ form_start(editForm) }}
                     {{ form_row(editForm.name) }}
-                    {{ form_row(editForm.description) }}
-                    {{ form_row(editForm.size) }}
-                    {{ form_row(editForm.quantity) }}
-                    {{ form_row(editForm.price) }}
-                    {{ form_row(editForm.imageUrl) }}
-                    {{ form_row(editForm.category) }}
                     <div class="text-center">
                         <button type="submit" class="btn btn-template-main"><i class="fa fa-save"></i> Редактиране</button>
-                        <a class="btn btn-template-main" href="{{ path('products_list') }}">Отказ</a>
+                        <a class="btn btn-template-main" href="{{ path('categories_list') }}">Отказ</a>
                     </div>
                     {{ form_end(editForm) }}
                 </div>
             </div>
 
-
         </div>
     </div>
+
 {% endblock %}
 

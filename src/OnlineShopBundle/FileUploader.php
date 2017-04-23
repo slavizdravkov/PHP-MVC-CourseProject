@@ -36,7 +36,6 @@ class FileUploader
         if (file_exists($filePath)) {
             unlink($filePath);
         }
-
-
     }
+
 }

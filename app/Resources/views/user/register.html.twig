@@ -7,18 +7,6 @@
                 <div class="col-md-7">
                     <h1>Регистрация</h1>
                 </div>
-
-                {% if app.session.flashBag.has('success') %}
-                    <div class="col-md-5">
-                        <ul class="breadcrumb">
-                            {% for msg in app.session.flashBag.get('success') %}
-                                <li>
-                                    {{ msg }}
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                {% endif %}
             </div>
         </div>
     </div>

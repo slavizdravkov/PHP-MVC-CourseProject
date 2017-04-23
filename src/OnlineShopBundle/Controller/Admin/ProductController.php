@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
+    const FILE_NAME = 'd385aca08b4a5437580b3c6e91584fbc.jpeg';
+
     /**
      * @Route("/admin/create/product", name="create_product")
      * @Method("GET")
@@ -42,17 +44,28 @@ class ProductController extends Controller
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
-
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+
+        if ($form->isValid() && $form->isSubmitted()) {
+
+            $fileName = self::FILE_NAME;
+
+            $file = $product->getImageUrl();
+
+            if ($file) {
+                $fileName = $this->get('app.image_uploader')->upload($file);
+            }
+
+            $product->setImageUrl($fileName);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($product);
             $em->flush();
 
             $this->addFlash('success', "Продуктът е добавен");
 
-            return $this->redirectToRoute('create_product');
+            return $this->redirectToRoute('products_list');
 
         }
 
@@ -103,7 +116,7 @@ class ProductController extends Controller
                 $file = $product->getImageUrl();
                 $fileName = $this->get('app.image_uploader')->upload($file);
 
-                if ($oldImageName) {
+                if ($oldImageName != self::FILE_NAME) {
 
                     $this->get('app.image_uploader')->remove($oldImageName);
                 }
@@ -114,6 +127,8 @@ class ProductController extends Controller
             }
 
             $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', "Продуктът е редактиран");
 
             return $this->redirectToRoute('products_list');
         }
@@ -140,7 +155,7 @@ class ProductController extends Controller
         $deleteForm->handleRequest($request);
 
         if ($deleteForm->isSubmitted() && $deleteForm->isValid()) {
-            if ($imageName) {
+            if ($imageName != self::FILE_NAME) {
                 $this->get('app.image_uploader')->remove($imageName);
             }
 

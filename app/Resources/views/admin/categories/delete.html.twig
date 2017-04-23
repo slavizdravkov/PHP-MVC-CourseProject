@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-7">
-                    <h1>Изтриване на продукт</h1>
+                    <h1>Изтриване на категория</h1>
                 </div>
             </div>
         </div>
@@ -20,15 +20,9 @@
 
                     {{ form_start(deleteForm) }}
                     {{ form_row(deleteForm.name) }}
-                    {{ form_row(deleteForm.description) }}
-                    {{ form_row(deleteForm.size) }}
-                    {{ form_row(deleteForm.quantity) }}
-                    {{ form_row(deleteForm.price) }}
-                    {{ form_row(deleteForm.imageUrl) }}
-                    {{ form_row(deleteForm.category) }}
                     <div class="text-center">
                         <button type="submit" class="btn btn-template-main"><i class="fa fa-eraser"></i> Изтриване</button>
-                        <a class="btn btn-template-main" href="{{ path('products_list') }}">Отказ</a>
+                        <a class="btn btn-template-main" href="{{ path('categories_list') }}">Отказ</a>
                     </div>
                     {{ form_end(deleteForm) }}
                 </div>
@@ -37,6 +31,5 @@
 
         </div>
     </div>
-
 {% endblock %}
 

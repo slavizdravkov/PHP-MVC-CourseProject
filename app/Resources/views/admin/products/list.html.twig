@@ -7,6 +7,19 @@
                 <div class="col-md-7">
                     <h1>Списък на продуктите</h1>
                 </div>
+
+                {% if app.session.flashBag.has('success') %}
+                    <div class="col-md-5">
+                        <ul class="breadcrumb">
+                            {% for msg in app.session.flashBag.get('success') %}
+                                <li>
+                                    {{ msg }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
             </div>
         </div>
     </div>
@@ -43,8 +56,12 @@
                                     {% for product in products %}
                                         <tr>
                                             <td><img src="{{ asset('uploads/images/' ~ product.imageUrl) }}" alt="" class="image" width="30 px"></td>
-                                            <th># {{ product.id }}</th>
-                                            <td>{{ product.category }}</td>
+                                            <th align="center">{{ product.id }}</th>
+                                            {% if product.category == null %}
+                                                <td><span class="label label-danger">Без категория</span>
+                                            {% else %}
+                                                <td><span class="label label-success">{{ product.category }}</span>
+                                            {% endif %}
                                             <td>{{ product.name }}</td>
                                             <td>{{ product.description }}</td>
                                             <td align="center">{{ product.quantity }}</td>

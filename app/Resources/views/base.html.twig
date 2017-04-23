@@ -48,6 +48,111 @@
 
                 <!-- *** TOP END *** -->
 
+                <!-- *** NAVBAR ***
+        _________________________________________________________ -->
+
+                <div class="navbar-affixed-top" data-spy="affix" data-offset-top="200">
+
+                    <div class="navbar navbar-default yamm" role="navigation" id="navbar">
+
+                        <div class="container">
+                            <div class="navbar-header">
+
+                                <a class="navbar-brand home" href="{{ path('homepage') }}">
+                                    <img src="{{ asset('img/logo.png') }}" alt="Universal logo" class="hidden-xs hidden-sm">
+                                    <img src="{{ asset('img/logo-small.png') }}" alt="Universal logo" class="visible-xs visible-sm"><span class="sr-only">Universal - go to homepage</span>
+                                </a>
+                                <div class="navbar-buttons">
+                                    <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <i class="fa fa-align-justify"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!--/.navbar-header -->
+
+                            <div class="navbar-collapse collapse" id="navigation">
+
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li class="dropdown use-yamm yamm-fw">
+                                        <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Промоции <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#">Категории</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Продукти</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Продукти на други потребители</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                    {% if app.user %}
+                                        <li class="dropdown use-yamm yamm-fw">
+                                            <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Продай свой продукт <b class="caret"></b></a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="#">Списък на всички закупени от магазина продукти</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        {% if app.user.isEditor() or app.user.isAdmin() %}
+                                            <li class="dropdown use-yamm yamm-fw">
+                                                <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Продукти <b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a href="{{ path('create_product') }}">Добавяне</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ path('products_list') }}">Списък на всички продукти</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+
+                                            <li class="dropdown use-yamm yamm-fw">
+                                                <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Категории <b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a href="{{ path('category_create') }}">Добавяне</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{{ path('categories_list') }}">Списък на всички категории</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+
+                                        {% endif %}
+
+                                        {% if app.user.isAdmin() %}
+                                            <li class="dropdown use-yamm yamm-fw">
+                                                <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Потребители <b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a href="{{ path('users_list') }}">Списък на всички потребители</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        {% endif %}
+
+                                    {% endif %}
+                                </ul>
+
+                            </div>
+                            <!--/.nav-collapse -->
+
+                        </div>
+
+
+                    </div>
+                    <!-- /#navbar -->
+
+                </div>
+
+                <!-- *** NAVBAR END *** -->
+
             </header>
         {% endblock %}
 

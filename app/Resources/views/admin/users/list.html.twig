@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="heading-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1>Списък на потребителите</h1>
+                </div>
+
+                {% if app.session.flashBag.has('success') %}
+                    <div class="col-md-5">
+                        <ul class="breadcrumb">
+                            {% for msg in app.session.flashBag.get('success') %}
+                                <li>
+                                    {{ msg }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="container">
+
+
+            <div class="row">
+
+                <!-- *** LEFT COLUMN ***
+         _________________________________________________________ -->
+
+                <div class="col-md-12">
+
+                    <div class="box">
+
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Статус</th>
+                                    <th>E-mail</th>
+                                    <th>Име</th>
+                                    <th>Населено място</th>
+                                    <th>Адрес</th>
+                                    <th>Роли</th>
+                                    <th>Действие</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for user in users %}
+                                    <tr>
+                                        <th>{{ user.id }}</th>
+                                        {% if user.status.name == 'active' %}
+                                                <td><span class="label label-success">{{ user.status.name }}</span>
+                                        {% elseif user.status.name == 'deleted'  %}
+                                                <td><span class="label label-danger">{{ user.status.name }}</span>
+                                        {% else %}
+                                                <td><span class="label label-warning">{{ user.status.name }}</span>
+                                        {% endif %}
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.fullName }}</td>
+                                        <td>{{ user.city }}</td>
+                                        <td>{{ user.address }}</td>
+                                        <td>{{ user.rolesAsString }}</td>
+                                        <td>
+                                            <a href="#" class="btn btn-template-main btn-sm">Редакция</a>
+                                            <a href="#" class="btn btn-template-main btn-sm">Изтриване</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+
+                    </div>
+                    <!-- /.box -->
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /#content -->
+
+{% endblock %}
