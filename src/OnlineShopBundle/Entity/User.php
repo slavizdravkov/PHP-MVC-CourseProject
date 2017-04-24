@@ -47,7 +47,6 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @Assert\NotBlank()
      */
     private $plainPassword;
 
@@ -106,12 +105,18 @@ class User implements UserInterface
      */
     private $roles;
 
+    /**
+     * @var int
+     *
+     *@ORM\Column(name="cash", type="integer")
+     */
+    private $cash;
+
     public function __construct()
     {
-        //$this->banned = 'no';
         $this->roles = new ArrayCollection();
+        $this->cash = 500;
     }
-
 
     /**
      * Get id
@@ -376,6 +381,21 @@ class User implements UserInterface
         $this->status = $status;
     }
 
+    /**
+     * @return int
+     */
+    public function getCash()
+    {
+        return $this->cash;
+    }
+
+    /**
+     * @param int $cash
+     */
+    public function setCash(int $cash)
+    {
+        $this->cash = $cash;
+    }
 
     public function isAdmin()
     {
@@ -394,7 +414,19 @@ class User implements UserInterface
 
     public function getRolesAsString()
     {
-        return implode(", ", $this->getRoles());
+        $rolesArray =
+            [
+                'ROLE_USER' => 'User',
+                'ROLE_EDITOR' => 'Editor',
+                'ROLE_ADMIN' => 'Admin'
+            ];
+        $roleNames = [];
+        foreach ($this->getRoles() as $role) {
+            if (array_key_exists($role, $rolesArray)) {
+                $roleNames[] = $rolesArray[$role];
+            }
+        }
+        return implode(", ", $roleNames);
     }
 
 }

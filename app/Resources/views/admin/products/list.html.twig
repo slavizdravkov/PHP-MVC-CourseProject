@@ -41,33 +41,33 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>Снимка</th>
-                                    <th>ID</th>
-                                    <th>Категория</th>
-                                    <th>Име</th>
-                                    <th>Описание</th>
-                                    <th>Количество</th>
-                                    <th>Цена</th>
-                                    <th>Добавен на</th>
-                                    <th>Действие</th>
+                                    <th style="text-align: center">Снимка</th>
+                                    <th style="text-align: center">ID</th>
+                                    <th style="text-align: center">Категория</th>
+                                    <th style="text-align: center">Име</th>
+                                    <th style="text-align: center">Описание</th>
+                                    <th style="text-align: center">Количество</th>
+                                    <th style="text-align: center">Цена</th>
+                                    <th style="text-align: center">Добавен на</th>
+                                    <th style="text-align: center">Действие</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     {% for product in products %}
                                         <tr>
-                                            <td><img src="{{ asset('uploads/images/' ~ product.imageUrl) }}" alt="" class="image" width="30 px"></td>
-                                            <th align="center">{{ product.id }}</th>
+                                            <td align="center"><img src="{{ asset('uploads/images/' ~ product.imageUrl) }}" alt="" class="image" width="30 px"></td>
+                                            <th style="text-align: center">{{ product.id }}</th>
                                             {% if product.category == null %}
-                                                <td><span class="label label-danger">Без категория</span>
+                                                <td align="center"><span class="label label-danger">Без категория</span>
                                             {% else %}
-                                                <td><span class="label label-success">{{ product.category }}</span>
+                                                <td align="center"><span class="label label-success">{{ product.category }}</span>
                                             {% endif %}
-                                            <td>{{ product.name }}</td>
-                                            <td>{{ product.description }}</td>
+                                            <td align="center">{{ product.name }}</td>
+                                            <td align="center">{{ product.description }}</td>
                                             <td align="center">{{ product.quantity }}</td>
-                                            <td align="right">{{ product.price }} лв.</td>
+                                            <td align="center">{{ product.price }} лв.</td>
                                             <td align="center">{{ product.createdOn|date('d-m-Y') }}</td>
-                                            <td>
+                                            <td align="center">
                                                 <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-template-main btn-sm">Редакция</a>
                                                 <a href="{{ path('product_delete', {'id': product.id}) }}" class="btn btn-template-main btn-sm">Изтриване</a>
                                             </td>

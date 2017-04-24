@@ -3,17 +3,20 @@
 namespace OnlineShopBundle\Form;
 
 use OnlineShopBundle\Entity\User;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserEditType extends AbstractType
+class UserEditType extends UserType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-        $builder->add('roles', ChoiceType::class, array(
+        $builder
+            ->add('cash', IntegerType::class, ['label' => 'Сума за покупки'])
+            ->add('status', null, ['label' => 'Статус', 'placeholder' => 'Избери статус'])
+            ->add('roles', ChoiceType::class, array(
             'choices' => [
                             'User' => 'ROLE_USER',
                             'Editor' => 'ROLE_EDITOR',

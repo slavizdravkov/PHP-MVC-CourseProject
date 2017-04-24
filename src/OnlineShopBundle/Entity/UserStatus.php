@@ -92,5 +92,10 @@ class UserStatus
         $this->users = $users;
     }
 
+    function __toString()
+    {
+        return $this->getName();
+    }
+
 }
 

@@ -41,35 +41,36 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Статус</th>
-                                    <th>E-mail</th>
-                                    <th>Име</th>
-                                    <th>Населено място</th>
-                                    <th>Адрес</th>
-                                    <th>Роли</th>
-                                    <th>Действие</th>
+                                    <th style="text-align: center">ID</th>
+                                    <th style="text-align: center">Статус</th>
+                                    <th style="text-align: center">E-mail</th>
+                                    <th style="text-align: center">Име</th>
+                                    <th style="text-align: center">Населено място</th>
+                                    <th style="text-align: center">Адрес</th>
+                                    <th style="text-align: center">Сума за покупки</th>
+                                    <th style="text-align: center">Роли</th>
+                                    <th style="text-align: center">Действие</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% for user in users %}
                                     <tr>
-                                        <th>{{ user.id }}</th>
+                                        <th style="text-align: center">{{ user.id }}</th>
                                         {% if user.status.name == 'active' %}
-                                                <td><span class="label label-success">{{ user.status.name }}</span>
+                                                <td align="center"><span class="label label-success">{{ user.status.name }}</span>
                                         {% elseif user.status.name == 'deleted'  %}
-                                                <td><span class="label label-danger">{{ user.status.name }}</span>
+                                                <td align="center"><span class="label label-danger">{{ user.status.name }}</span>
                                         {% else %}
-                                                <td><span class="label label-warning">{{ user.status.name }}</span>
+                                                <td align="center"><span class="label label-warning">{{ user.status.name }}</span>
                                         {% endif %}
-                                        <td>{{ user.email }}</td>
-                                        <td>{{ user.fullName }}</td>
-                                        <td>{{ user.city }}</td>
-                                        <td>{{ user.address }}</td>
-                                        <td>{{ user.rolesAsString }}</td>
-                                        <td>
-                                            <a href="#" class="btn btn-template-main btn-sm">Редакция</a>
-                                            <a href="#" class="btn btn-template-main btn-sm">Изтриване</a>
+                                        <td align="center">{{ user.email }}</td>
+                                        <td align="center">{{ user.fullName }}</td>
+                                        <td align="center">{{ user.city }}</td>
+                                        <td align="center">{{ user.address }}</td>
+                                        <td align="center">{{ user.cash }} лв.</td>
+                                        <td align="center">{{ user.rolesAsString }}</td>
+                                        <td align="center">
+                                            <a href="{{ path('users_edit', {'id': user.id}) }}" class="btn btn-template-main btn-sm">Редакция</a>
                                         </td>
                                     </tr>
                                 {% endfor %}
