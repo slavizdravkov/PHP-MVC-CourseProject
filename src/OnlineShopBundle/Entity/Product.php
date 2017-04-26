@@ -72,13 +72,6 @@ class Product
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="deleted_on", type="datetime", nullable=true)
-     */
-    private $deletedOn;
-
-    /**
-     * @var \DateTime
-     *
      * @ORM\Column(name="created_on", type="datetime")
      */
     private $createdOn;
@@ -232,30 +225,6 @@ class Product
     public function getPrice()
     {
         return $this->price;
-    }
-
-    /**
-     * Set deletedOn
-     *
-     * @param \DateTime $deletedOn
-     *
-     * @return Product
-     */
-    public function setDeletedOn($deletedOn)
-    {
-        $this->deletedOn = $deletedOn;
-
-        return $this;
-    }
-
-    /**
-     * Get deletedOn
-     *
-     * @return \DateTime
-     */
-    public function getDeletedOn()
-    {
-        return $this->deletedOn;
     }
 
     /**

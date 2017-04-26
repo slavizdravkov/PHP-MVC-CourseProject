@@ -112,6 +112,13 @@ class User implements UserInterface
      */
     private $cash;
 
+    /**
+     * @var Cart[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="OnlineShopBundle\Entity\Cart", mappedBy="userId")
+     */
+    private $carts;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
@@ -395,6 +402,22 @@ class User implements UserInterface
     public function setCash(int $cash)
     {
         $this->cash = $cash;
+    }
+
+    /**
+     * @return ArrayCollection|Cart[]
+     */
+    public function getCarts()
+    {
+        return $this->carts;
+    }
+
+    /**
+     * @param ArrayCollection|Cart[] $carts
+     */
+    public function setCarts($carts)
+    {
+        $this->carts = $carts;
     }
 
     public function isAdmin()
