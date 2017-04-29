@@ -1,0 +1,101 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <div id="heading-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h1>Shopping cart</h1>
+                </div>
+                <div class="col-md-6">
+                    <ul class="breadcrumb">
+                        <li><a href="#">Home</a>
+                        </li>
+                        <li>Shopping cart</li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-12 clearfix" id="basket">
+
+                    <div class="box">
+
+                        <form method="post" action="{{ path('cart_update') }}">
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="2">Продукт</th>
+                                        <th>Количество</th>
+                                        <th>Единична цена</th>
+                                        <th colspan="2">Общо</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for product in cart_products %}
+                                        <tr>
+                                            <td>
+                                                <a href="#">
+                                                    <img src="{{ asset('uploads/images/' ~ product.product.imageUrl) }}" alt="White Blouse Armani">
+                                                </a>
+                                            </td>
+                                            <td><a href="#">{{ product.product.name }}</a>
+                                            </td>
+                                            <td>
+                                                <input type="number" value="{{ product.qty }}" class="form-control" name="quantity[{{ product.id }}]">
+                                            </td>
+                                            <td>{{ product.product.price }} лв.</td>
+                                            <td>{{ product.productPrice }} лв.</td>
+                                            <td>
+                                            </td>
+                                            <td><a href="#"><i class="fa fa-trash-o"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th colspan="6">Общо</th>
+                                        <th colspan="2">{{ total }} лв.</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+
+                            </div>
+                            <!-- /.table-responsive -->
+
+                            <div class="box-footer">
+                                <div class="pull-left">
+                                    <a href="{{ path('homepage') }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> Продължи пазаруването</a>
+                                </div>
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-refresh"></i> Обнови</button>
+                                    <button type="submit" class="btn btn-template-main">Proceed to checkout <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                    <!-- /.box -->
+
+                </div>
+                <!-- /.col-md-9 -->
+
+            </div>
+
+        </div>
+        <!-- /.container -->
+    </div>
+{% endblock %}

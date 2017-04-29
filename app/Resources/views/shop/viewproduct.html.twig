@@ -31,7 +31,7 @@
                         <div class="col-sm-6">
                             <div class="box">
 
-                                <form>
+                                <form action="{{ path('cart_add', {'id': product.id}) }}" method="post">
                                     <div class="sizes">
 
                                         <h3>Available sizes</h3>

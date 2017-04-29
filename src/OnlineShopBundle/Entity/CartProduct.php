@@ -27,7 +27,7 @@ class CartProduct
      * @ORM\ManyToOne(targetEntity="OnlineShopBundle\Entity\Cart")
      * @ORM\JoinColumn(name="cart_id", referencedColumnName="id")
      */
-    private $cartId;
+    private $cart;
 
     /**
      * @var Product
@@ -35,7 +35,7 @@ class CartProduct
      * @ORM\ManyToOne(targetEntity="OnlineShopBundle\Entity\Product")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
-    private $productId;
+    private $product;
 
     /**
      * @var int
@@ -63,51 +63,35 @@ class CartProduct
     }
 
     /**
-     * Set cartId
-     *
-     * @param integer $cartId
-     *
-     * @return CartProduct
+     * @return Cart
      */
-    public function setCartId($cartId)
+    public function getCart()
     {
-        $this->cartId = $cartId;
-
-        return $this;
+        return $this->cart;
     }
 
     /**
-     * Get cartId
-     *
-     * @return int
+     * @param Cart $cart
      */
-    public function getCartId()
+    public function setCart(Cart $cart)
     {
-        return $this->cartId;
+        $this->cart = $cart;
     }
 
     /**
-     * Set productId
-     *
-     * @param integer $productId
-     *
-     * @return CartProduct
+     * @return Product
      */
-    public function setProductId($productId)
+    public function getProduct()
     {
-        $this->productId = $productId;
-
-        return $this;
+        return $this->product;
     }
 
     /**
-     * Get productId
-     *
-     * @return int
+     * @param Product $product
      */
-    public function getProductId()
+    public function setProduct(Product $product)
     {
-        return $this->productId;
+        $this->product = $product;
     }
 
     /**

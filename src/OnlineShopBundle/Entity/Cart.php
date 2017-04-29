@@ -22,12 +22,12 @@ class Cart
     private $id;
 
     /**
-     * @var int
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="OnlineShopBundle\Entity\User", inversedBy="carts")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $userId;
+    private $user;
 
     /**
      * @var string
@@ -57,6 +57,12 @@ class Cart
      */
     private $dateUpdated;
 
+    public function __construct()
+    {
+        $this->amount = 0;
+        $this->address = "";
+    }
+
 
     /**
      * Get id
@@ -69,27 +75,19 @@ class Cart
     }
 
     /**
-     * Set userId
-     *
-     * @param integer $userId
-     *
-     * @return Cart
+     * @return User
      */
-    public function setUserId($userId)
+    public function getUser(): User
     {
-        $this->userId = $userId;
-
-        return $this;
+        return $this->user;
     }
 
     /**
-     * Get userId
-     *
-     * @return int
+     * @param User $user
      */
-    public function getUserId()
+    public function setUser(User $user)
     {
-        return $this->userId;
+        $this->user = $user;
     }
 
     /**

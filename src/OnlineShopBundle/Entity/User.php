@@ -115,7 +115,7 @@ class User implements UserInterface
     /**
      * @var Cart[]|ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="OnlineShopBundle\Entity\Cart", mappedBy="userId")
+     * @ORM\OneToMany(targetEntity="OnlineShopBundle\Entity\Cart", mappedBy="user")
      */
     private $carts;
 
