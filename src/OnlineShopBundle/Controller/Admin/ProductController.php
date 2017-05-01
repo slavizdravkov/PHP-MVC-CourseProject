@@ -163,6 +163,8 @@ class ProductController extends Controller
             $em->remove($product);
             $em->flush();
 
+            $this->addFlash('success', "Продуктът е изтрит");
+
             return $this->redirectToRoute('products_list');
         }
 

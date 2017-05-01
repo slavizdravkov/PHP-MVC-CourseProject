@@ -4,17 +4,22 @@
     <div id="heading-breadcrumbs">
         <div class="container">
             <div class="row">
-                <div class="col-md-6">
-                    <h1>Shopping cart</h1>
+                <div class="col-md-7">
+                    <h1>Количка</h1>
                 </div>
-                <div class="col-md-6">
-                    <ul class="breadcrumb">
-                        <li><a href="#">Home</a>
-                        </li>
-                        <li>Shopping cart</li>
-                    </ul>
 
-                </div>
+                {% if app.session.flashBag.has('success') %}
+                    <div class="col-md-5">
+                        <ul class="breadcrumb">
+                            {% for msg in app.session.flashBag.get('success') %}
+                                <li>
+                                    {{ msg }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
             </div>
         </div>
     </div>
@@ -57,7 +62,7 @@
                                             <td>{{ product.productPrice }} лв.</td>
                                             <td>
                                             </td>
-                                            <td><a href="#"><i class="fa fa-trash-o"></i></a>
+                                            <td><a href="{{ path('cart_delete_product', {'id': product.id}) }}"><i class="fa fa-trash-o"></i></a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -76,12 +81,11 @@
 
                             <div class="box-footer">
                                 <div class="pull-left">
-                                    <a href="{{ path('homepage') }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> Продължи пазаруването</a>
+                                    <a href="{{ path('homepage') }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> Продължете пазаруването</a>
                                 </div>
                                 <div class="pull-right">
                                     <button type="submit" class="btn btn-default"><i class="fa fa-refresh"></i> Обнови</button>
-                                    <button type="submit" class="btn btn-template-main">Proceed to checkout <i class="fa fa-chevron-right"></i>
-                                    </button>
+                                    <a href="{{ path('cart_checkout', {'id': cart.id}) }}" class="btn btn-template-main">Продължете към плащане <i class="fa fa-chevron-right"></i></a>
                                 </div>
                             </div>
 

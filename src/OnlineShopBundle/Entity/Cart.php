@@ -32,6 +32,56 @@ class Cart
     /**
      * @var string
      *
+     * @ORM\Column(name="ship_first_name", type="string", length=255)
+     */
+    private $shipFirstName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ship_last_name", type="string", length=255)
+     */
+    private $shipLastName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ship_city", type="string", length=255)
+     */
+    private $shipCity;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ship_zip_code", type="string", length=255)
+     */
+    private $shipZipCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ship_address", type="string", length=255)
+     */
+    private $shipAddress;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ship_email", type="string", length=255)
+     */
+    private $shipEmail;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ship_phone", type="string", length=255)
+     */
+    private $shipPhone;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="amount", type="decimal", precision=10, scale=2)
      */
     private $amount;
@@ -39,9 +89,9 @@ class Cart
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(name="payment_method", type="string", length=255)
      */
-    private $address;
+    private $paymentMethod;
 
     /**
      * @var \DateTime
@@ -57,11 +107,26 @@ class Cart
      */
     private $dateUpdated;
 
-    public function __construct()
+    public function __construct($shipFirstName, $shipLastName, $shipCity, $shipAddress, $shipEmail)
     {
-        $this->amount = 0;
-        $this->address = "";
+        $this->shipFirstName = $shipFirstName;
+        $this->shipLastName = $shipLastName;
+        $this->shipCity = $shipCity;
+        $this->shipZipCode = "";
+        $this->shipAddress = $shipAddress;
+        $this->shipEmail = $shipEmail;
+        $this->shipPhone = "";
+        $this->amount = 0.00;
+        $this->paymentMethod = "";
     }
+
+
+
+//    public function __construct()
+//    {
+//        $this->amount = 0;
+//        $this->address = "";
+//    }
 
 
     /**
@@ -115,27 +180,19 @@ class Cart
     }
 
     /**
-     * Set address
-     *
-     * @param string $address
-     *
-     * @return Cart
+     * @return string
      */
-    public function setAddress($address)
+    public function getShipAddress()
     {
-        $this->address = $address;
-
-        return $this;
+        return $this->shipAddress;
     }
 
     /**
-     * Get address
-     *
-     * @return string
+     * @param string $shipAddress
      */
-    public function getAddress()
+    public function setShipAddress(string $shipAddress)
     {
-        return $this->address;
+        $this->shipAddress = $shipAddress;
     }
 
     /**
@@ -185,5 +242,118 @@ class Cart
     {
         return $this->dateUpdated;
     }
+
+    /**
+     * @return string
+     */
+    public function getShipFirstName()
+    {
+        return $this->shipFirstName;
+    }
+
+    /**
+     * @param string $shipFirstName
+     */
+    public function setShipFirstName(string $shipFirstName)
+    {
+        $this->shipFirstName = $shipFirstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShipLastName()
+    {
+        return $this->shipLastName;
+    }
+
+    /**
+     * @param string $shipLastName
+     */
+    public function setShipLastName(string $shipLastName)
+    {
+        $this->shipLastName = $shipLastName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShipCity()
+    {
+        return $this->shipCity;
+    }
+
+    /**
+     * @param string $shipCity
+     */
+    public function setShipCity(string $shipCity)
+    {
+        $this->shipCity = $shipCity;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShipZipCode()
+    {
+        return $this->shipZipCode;
+    }
+
+    /**
+     * @param string $shipZipCode
+     */
+    public function setShipZipCode(string $shipZipCode)
+    {
+        $this->shipZipCode = $shipZipCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShipEmail()
+    {
+        return $this->shipEmail;
+    }
+
+    /**
+     * @param string $shipEmail
+     */
+    public function setShipEmail(string $shipEmail)
+    {
+        $this->shipEmail = $shipEmail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShipPhone()
+    {
+        return $this->shipPhone;
+    }
+
+    /**
+     * @param string $shipPhone
+     */
+    public function setShipPhone(string $shipPhone)
+    {
+        $this->shipPhone = $shipPhone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaymentMethod()
+    {
+        return $this->paymentMethod;
+    }
+
+    /**
+     * @param string $paymentMethod
+     */
+    public function setPaymentMethod(string $paymentMethod)
+    {
+        $this->paymentMethod = $paymentMethod;
+    }
+
 }
 

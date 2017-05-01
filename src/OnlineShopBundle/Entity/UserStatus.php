@@ -35,7 +35,7 @@ class UserStatus
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="OnlineShopBundle\Entity\User", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="OnlineShopBundle\Entity\User", mappedBy="status")
      *
      * @var User[]|ArrayCollection
      */
