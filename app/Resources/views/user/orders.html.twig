@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="heading-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1>Списък на направените поръчки</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12" id="customer-orders">
+
+        <div class="box">
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th style="text-align: center">Поръчка</th>
+                        <th style="text-align: center">Дата</th>
+                        <th style="text-align: center">Сума</th>
+                        <th style="text-align: center">Действие</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <th style="text-align: center"># {{ order.id }}</th>
+                            <td align="center">{{ order.dateCreated|date('d-m-Y') }}</td>
+                            <td align="center">{{ order.amount }} лв.</td>
+                            <td align="center"><a href="#" class="btn btn-template-main btn-sm">Преглед</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.table-responsive -->
+
+        </div>
+        <!-- /.box -->
+
+    </div>
+    <!-- /.col-md-9 -->
+{% endblock %}
+

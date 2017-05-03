@@ -1,6 +1,122 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
+    <div id="heading-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1>Преглед на поръчката</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-md-12 clearfix" id="basket">
+
+                    <form method="post">
+
+                        <div class="box">
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="2">Продукт</th>
+                                        <th>Количество</th>
+                                        <th>Единична цена</th>
+                                        <th colspan="2">Общо</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for product in cart_products %}
+                                        <tr>
+                                            <td>
+                                                <img src="{{ asset('uploads/images/' ~ product.product.imageUrl) }}">
+                                            </td>
+                                            <td>{{ product.product.name }}</td>
+                                            <td>{{ product.qty }}</td>
+                                            <td>{{ product.product.price }} лв.</td>
+                                            <td>{{ product.productPrice }} лв.</td>
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th colspan="6">Общо</th>
+                                        <th colspan="2">{{ total }} лв.</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+
+                            </div>
+                            <!-- /.table-responsive -->
+
+                        </div>
+                        <!-- /.box -->
+
+                        <div class="box">
+
+                            <h4>Детайли за доставката</h4>
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Име</th>
+                                            <th>Фамилия</th>
+                                            <th>Град</th>
+                                            <th>Пощ. код</th>
+                                            <th>Адрес</th>
+                                            <th>Email</th>
+                                            <th>Телефон</th>
+                                            <th>Метод на плащане</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ cart.shipFirstName }}</td>
+                                            <td>{{ cart.shipLastName }}</td>
+                                            <td>{{ cart.shipCity }}</td>
+                                            <td>{{ cart.shipZipCode }}</td>
+                                            <td>{{ cart.shipAddress }}</td>
+                                            <td>{{ cart.shipEmail }}</td>
+                                            <td>{{ cart.shipPhone }}</td>
+                                            <td>{{ cart.paymentMethod }}</td>
+                                            <td>
+                                                <a href="{{ path('cart_checkout', {'id': cart.id}) }}" class="btn btn-template-main btn-sm">Редакция</a>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                            <div class="box-footer">
+                                <div class="pull-right">
+                                    <button type="submit" class="btn btn-template-main">Потвърдете поръчката<i class="fa fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+                <!-- /.col-md-12 -->
+
+            </div>
+
+        </div>
+        <!-- /.container -->
+    </div>
 
 {% endblock %}
 

@@ -91,6 +91,19 @@
 
                                     {% if app.user %}
                                         <li class="dropdown use-yamm yamm-fw">
+                                            <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Моят профил <b class="caret"></b></a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="{{ path('user_orders') }}">Списък на моите поръчки</a>
+                                                </li>
+
+                                                <li>
+                                                    <a href="#">Информация за профила</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="dropdown use-yamm yamm-fw">
                                             <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Продай свой продукт <b class="caret"></b></a>
                                             <ul class="dropdown-menu">
                                                 <li>

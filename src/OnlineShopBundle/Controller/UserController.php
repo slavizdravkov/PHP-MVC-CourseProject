@@ -2,8 +2,10 @@
 
 namespace OnlineShopBundle\Controller;
 
+use OnlineShopBundle\Entity\Cart;
 use OnlineShopBundle\Entity\Role;
 use OnlineShopBundle\Entity\User;
+use OnlineShopBundle\Entity\UserStatus;
 use OnlineShopBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -32,6 +34,10 @@ class UserController extends Controller
             $defaultRole = $roleRepository->findOneBy(['name' => 'ROLE_USER']);
             $user->addRole($defaultRole);
 
+            $statusRepository = $this->getDoctrine()->getRepository(UserStatus::class);
+            $defaultStatus = $statusRepository->findOneBy(['name' => 'active']);
+            $user->setStatus($defaultStatus);
+
             $encoder = $this->get('security.password_encoder');
 
             $user->setPassword($encoder->encodePassword($user, $user->getPlainPassword()));
@@ -44,5 +50,23 @@ class UserController extends Controller
         }
 
         return $this->render('user/register.html.twig', ['formUser' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/user/orders", name="user_orders")
+     */
+    public function listOrders()
+    {
+        $user = $this->getUser();
+
+        if (!$user) {
+            return $this->redirectToRoute('user_login');
+        }
+
+        $orders = $this->getDoctrine()
+            ->getRepository(Cart::class)
+            ->findBy(['user' => $user]);
+
+        return $this->render('user/orders.html.twig', ['orders' => $orders]);
     }
 }

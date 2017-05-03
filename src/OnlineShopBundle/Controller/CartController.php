@@ -31,17 +31,12 @@ class CartController extends Controller
             ->getRepository(CartProduct::class)
             ->findBy(['cart' => $cart]);
 
-        $totalSum = 0.00;
-        foreach ($productsInCart as $product) {
-            $totalSum += $product->getProductPrice();
-        }
-
-
+        $total = $this->totalSum($productsInCart);
 
         return $this->render('cart/add.html.twig',
             [
                 'cart_products' => $productsInCart,
-                'total' => number_format($totalSum, 2),
+                'total' => $total,
                 'cart' => $cart
             ]);
 
@@ -213,8 +208,12 @@ class CartController extends Controller
 
     /**
      * @Route("/cart/order", name="cart_order")
+     *
+     * @param Request $request
+     *
+     * @return Response
      */
-    public function orderAction()
+    public function orderAction(Request $request)
     {
         $session = $this->get('session');
         $cart_id = $session->get('cart_id', false);
@@ -229,10 +228,34 @@ class CartController extends Controller
             ->getRepository(CartProduct::class)
             ->findBy(['cart' => $cart]);
 
+        $total = $this->totalSum($productsInCart);
 
+        if ($request->isMethod('POST')){
+            $cart->setAmount($total);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($cart);
+            $em->flush();
+
+            $session->remove('cart_id');
+
+            return $this->redirectToRoute('user_orders');
+        }
         return $this->render('cart/order.html.twig', [
             'cart' => $cart,
-            'cart_products' => $productsInCart
+            'cart_products' => $productsInCart,
+            'total' => $total
         ]);
+    }
+
+
+    public function totalSum($cartProduct)
+    {
+        $totalSum = 0.00;
+        foreach ($cartProduct as $product) {
+            $totalSum += $product->getProductPrice();
+        }
+
+        return number_format($totalSum, 2);
     }
 }

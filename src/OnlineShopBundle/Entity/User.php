@@ -89,7 +89,6 @@ class User implements UserInterface
     /**
      * @ORM\ManyToOne(targetEntity="OnlineShopBundle\Entity\UserStatus", inversedBy="users")
      * @ORM\JoinColumn(name="status_id", referencedColumnName="id", onDelete="SET NULL")
-     * @Assert\NotBlank()
      *
      * @var UserStatus
      */
