@@ -17,3 +17,14 @@ services:
 #    service_name:
 #        class: OnlineShopBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    repository.promotions:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - \OnlineShopBundle\Entity\ProductPromotion
+    promotion_manager:
+        class: OnlineShopBundle\Service\PromotionManager
+        arguments: ['@repository.promotions']
+    price_calculator:
+        class: OnlineShopBundle\Service\PriceCalculator
+        arguments: ['@promotion_manager']

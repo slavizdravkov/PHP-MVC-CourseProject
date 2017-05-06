@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-7">
-                    <h1>Category with left sidebar</h1>
+                    <h1>Продукти в промоция</h1>
                 </div>
             </div>
         </div>
@@ -55,154 +55,39 @@ _________________________________________________________ -->
 
                     <div class="row products">
 
-                        <div class="col-md-4 col-sm-6">
-                            <div class="product">
-                                <div class="image">
-                                    <a href="#">
-                                        <img src="{{ asset('img/product1.jpg') }}" alt="" class="img-responsive image1">
-                                    </a>
+                        {% for product in products %}
+                            <div class="col-md-4 col-sm-6">
+                                <div class="product">
+                                    <div class="image">
+                                        <a href="{{ path('view_product', {'id': product.id}) }}">
+                                            <img src="{{ asset('uploads/images/' ~ product.imageUrl) }}" alt="" class="img-responsive image1">
+                                        </a>
+                                    </div>
+                                    <!-- /.image -->
+                                    <div class="text">
+                                        <h3><a href="{{ path('view_product', {'id': product.id}) }}">{{ product.name }}</a></h3>
+                                        {% set promotional_price = calc.Calculate(product) %}
+                                        <p class="price">
+                                            <del>{{ product.price | number_format(2) }} лв.</del> {{ promotional_price | number_format(2) }} лв.
+                                        </p>
+                                        <p class="buttons">
+                                            <a href="#" class="btn btn-default">View detail</a>
+                                            <a href="#" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        </p>
+                                    </div>
+                                    <!-- /.text -->
+
+                                    <div class="ribbon sale">
+                                        <div class="theribbon">SALE</div>
+                                        <div class="ribbon-background"></div>
+                                    </div>
+                                    <!-- /.ribbon -->
+
                                 </div>
-                                <!-- /.image -->
-                                <div class="text">
-                                    <h3><a href="#">Fur coat with very but very very long name</a></h3>
-                                    <p class="price">$143.00</p>
-                                    <p class="buttons">
-                                        <a href="#" class="btn btn-default">View detail</a>
-                                        <a href="#" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                    </p>
-                                </div>
-                                <!-- /.text -->
+                                <!-- /.product -->
                             </div>
-                            <!-- /.product -->
-                        </div>
+                        {% endfor %}
 
-                        <div class="col-md-4 col-sm-6">
-                            <div class="product">
-                                <div class="image">
-                                    <a href="#">
-                                        <img src="{{ asset('img/product2.jpg') }}" alt="" class="img-responsive image1">
-                                    </a>
-                                </div>
-                                <!-- /.image -->
-                                <div class="text">
-                                    <h3><a href="#">White Blouse Armani</a></h3>
-                                    <p class="price"><del>$280</del> $143.00</p>
-                                    <p class="buttons">
-                                        <a href="#" class="btn btn-default">View detail</a>
-                                        <a href="#" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                    </p>
-                                </div>
-                                <!-- /.text -->
-
-                                <div class="ribbon sale">
-                                    <div class="theribbon">SALE</div>
-                                    <div class="ribbon-background"></div>
-                                </div>
-                                <!-- /.ribbon -->
-
-                                <div class="ribbon new">
-                                    <div class="theribbon">NEW</div>
-                                    <div class="ribbon-background"></div>
-                                </div>
-                                <!-- /.ribbon -->
-                            </div>
-                            <!-- /.product -->
-                        </div>
-
-                        <div class="col-md-4 col-sm-6">
-                            <div class="product">
-                                <div class="image">
-                                    <a href="#">
-                                        <img src="{{ asset('img/product3.jpg') }}" alt="" class="img-responsive image1">
-                                    </a>
-                                </div>
-                                <!-- /.image -->
-                                <div class="text">
-                                    <h3><a href="#">Black Blouse Versace</a></h3>
-                                    <p class="price">$143.00</p>
-                                    <p class="buttons">
-                                        <a href="#" class="btn btn-default">View detail</a>
-                                        <a href="#" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                    </p>
-
-                                </div>
-                                <!-- /.text -->
-                            </div>
-                            <!-- /.product -->
-                        </div>
-
-                        <div class="col-md-4 col-sm-6">
-                            <div class="product">
-                                <div class="image">
-                                    <a href="#">
-                                        <img src="{{ asset('img/product3.jpg') }}" alt="" class="img-responsive image1">
-                                    </a>
-                                </div>
-                                <!-- /.image -->
-                                <div class="text">
-                                    <h3><a href="#">Black Blouse Versace</a></h3>
-                                    <p class="price">$143.00</p>
-                                    <p class="buttons">
-                                        <a href="#" class="btn btn-default">View detail</a>
-                                        <a href="#" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                    </p>
-
-                                </div>
-                                <!-- /.text -->
-                            </div>
-                            <!-- /.product -->
-                        </div>
-
-                        <div class="col-md-4 col-sm-6">
-                            <div class="product">
-                                <div class="image">
-                                    <a href="#">
-                                        <img src="{{ asset('img/product2.jpg') }}" alt="" class="img-responsive image1">
-                                    </a>
-                                </div>
-                                <!-- /.image -->
-                                <div class="text">
-                                    <h3><a href="#">White Blouse Versace</a></h3>
-                                    <p class="price">$143.00</p>
-                                    <p class="buttons">
-                                        <a href="#" class="btn btn-default">View detail</a>
-                                        <a href="#" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                    </p>
-
-                                </div>
-                                <!-- /.text -->
-
-                                <div class="ribbon new">
-                                    <div class="theribbon">NEW</div>
-                                    <div class="ribbon-background"></div>
-                                </div>
-                                <!-- /.ribbon -->
-                            </div>
-                            <!-- /.product -->
-                        </div>
-
-                        <div class="col-md-4 col-sm-6">
-                            <div class="product">
-                                <div class="image">
-                                    <a href="#">
-                                        <img src="{{ asset('img/product1.jpg') }}" alt="" class="img-responsive image1">
-                                    </a>
-                                </div>
-                                <!-- /.image -->
-                                <div class="text">
-                                    <h3><a href="#">Fur coat</a></h3>
-                                    <p class="price">$143.00</p>
-                                    <p class="buttons">
-                                        <a href="#" class="btn btn-default">View detail</a>
-                                        <a href="#" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                    </p>
-
-                                </div>
-                                <!-- /.text -->
-                            </div>
-                            <!-- /.product -->
-                        </div>
-                        <!-- /.col-md-4 -->
                     </div>
                     <!-- /.products -->
 
