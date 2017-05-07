@@ -23,10 +23,20 @@ class PriceCalculator
     public function Calculate($product)
     {
         $promotionalProducts = $this->manager->getProductsDiscount();
+
         $discount = 0;
-        if (array_key_exists($product->getId(), $promotionalProducts)) {
-            $discount = $promotionalProducts[$product->getId()];
+
+        if ($this->manager->hasAllProductPromotion()) {
+            $discount = $this->manager->getAllProductDiscount();
         }
+
+        if (array_key_exists($product->getId(), $promotionalProducts)) {
+            $discount = max($promotionalProducts[$product->getId()], $discount);
+        }
+
+        $productCategory = $product->getCategory();
+
+        $discount = max($this->manager->categoryPromotion($productCategory), $discount);
 
         return $product->getPrice() - $product->getPrice() * ($discount / 100);
     }

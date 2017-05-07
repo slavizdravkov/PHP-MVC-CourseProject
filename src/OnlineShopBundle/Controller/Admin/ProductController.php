@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
 {
-    const FILE_NAME = 'd385aca08b4a5437580b3c6e91584fbc.jpeg';
+    const FILE_NAME = 'ee1bbe3dbdd7b72e01a95b8d85771001.jpeg';
 
     /**
      * @Route("/admin/create/product", name="create_product")

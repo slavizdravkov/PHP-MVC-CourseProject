@@ -34,14 +34,21 @@
                                 <form action="{{ path('cart_add', {'id': product.id}) }}" method="post">
                                     <div class="sizes">
 
-                                        <h3>Available sizes</h3>
+                                        <h3>Налични {{ product.quantity }} бр.</h3>
 
                                     </div>
 
-                                    <p class="price">{{ product.price }}</p>
+                                    {% set promotional_price = calc.Calculate(product) %}
+                                    {% if promotional_price != product.price %}
+                                        <p class="price">
+                                            <del>{{ product.price | number_format(2) }} лв.</del> {{ promotional_price | number_format(2) }} лв.
+                                        </p>
+                                    {% else %}
+                                        <p class="price">{{ product.price }} лв.</p>
+                                    {% endif %}
 
                                     <p class="text-center">
-                                        <button type="submit" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+                                        <button type="submit" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i> Добави в количката</button>
                                     </p>
 
                                 </form>

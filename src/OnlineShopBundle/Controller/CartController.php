@@ -33,11 +33,14 @@ class CartController extends Controller
 
         $total = $this->totalSum($productsInCart);
 
+        $calc = $this->get('price_calculator');
+
         return $this->render('cart/add.html.twig',
             [
                 'cart_products' => $productsInCart,
                 'total' => $total,
-                'cart' => $cart
+                'cart' => $cart,
+                'calc' => $calc
             ]);
 
     }
@@ -45,15 +48,16 @@ class CartController extends Controller
     /**
      * @Route("/cart/add/{id}", name="cart_add")
      *
-     * @param Request $request
      * @param Product $product
      *
      * @return Response
      */
-    public function addAction(Request $request, Product $product)
+    public function addAction(Product $product)
     {
         /** @var User $user */
         $user = $this->getUser();
+
+        $calc = $this->get('price_calculator');
 
         if (!$user) {
             return $this->redirectToRoute('user_login');
@@ -97,10 +101,10 @@ class CartController extends Controller
                 $cartProduct->setCart($cart);
                 $cartProduct->setProduct($product);
                 $cartProduct->setQty(1);
-                $cartProduct->setProductPrice($product->getPrice());
+                $cartProduct->setProductPrice($calc->Calculate($product));
             } else {
                 $cartProduct->setQty($cartProduct->getQty() + 1);
-                $cartProduct->setProductPrice($product->getPrice() * (float)$cartProduct->getQty());
+                $cartProduct->setProductPrice($calc->Calculate($product) * (float)$cartProduct->getQty());
             }
 
             $em->persist($cartProduct);
@@ -126,8 +130,12 @@ class CartController extends Controller
     public function updateAction(Request $request)
     {
         $session = $this->get('session');
+
         $em = $this->getDoctrine()->getManager();
+
         $qty = $request->get('quantity');
+
+        $calc = $this->get('price_calculator');
 
         foreach ($qty as $id => $quantity) {
             $cartProduct = $this->getDoctrine()
@@ -136,7 +144,8 @@ class CartController extends Controller
 
             if ($cartProduct) {
                 $cartProduct->setQty($quantity);
-                $cartProduct->setProductPrice($cartProduct->getProduct()->getPrice() * (float)$cartProduct->getQty());
+                $cartProduct
+                    ->setProductPrice(round($calc->Calculate($cartProduct->getProduct()), 2) * $cartProduct->getQty());
                 $em->persist($cartProduct);
                 $em->flush();
 
@@ -216,7 +225,10 @@ class CartController extends Controller
     public function orderAction(Request $request)
     {
         $session = $this->get('session');
+
         $cart_id = $session->get('cart_id', false);
+
+        $calc = $this->get('price_calculator');
 
         if (!$cart_id) {
             return $this->redirectToRoute('homepage');
@@ -241,14 +253,20 @@ class CartController extends Controller
 
             return $this->redirectToRoute('user_orders');
         }
+
         return $this->render('cart/order.html.twig', [
             'cart' => $cart,
             'cart_products' => $productsInCart,
-            'total' => $total
+            'total' => $total,
+            'calc' => $calc
         ]);
     }
 
-
+    /**
+     * @param CartProduct $cartProduct
+     *
+     * @return string
+     */
     public function totalSum($cartProduct)
     {
         $totalSum = 0.00;

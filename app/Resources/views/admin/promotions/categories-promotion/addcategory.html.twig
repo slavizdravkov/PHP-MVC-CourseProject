@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="heading-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1>Добавяне на категории в промоция</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="container">
+
+
+            <div class="row">
+
+                <!-- *** LEFT COLUMN ***
+         _________________________________________________________ -->
+
+                <div class="col-md-12">
+
+                    <div class="box">
+                        <form method="post" action="{{ path('category_promotion_add_category', {'id': promotion.id}) }}">
+
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th style="text-align: center">ID</th>
+                                        <th style="text-align: center">Име</th>
+                                       <th style="text-align: center">Добави към промоция</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for category in categories %}
+                                        <tr>
+                                            <th style="text-align: center">{{ category.id }}</th>
+                                            <td align="center">{{ category.name }}</td>
+                                            <td align="center">
+                                                <input type="checkbox" value="{{ category.id }}" name="categories[]">
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-template-main"><i class="fa fa-sign-in"></i> Добавяне</button>
+                                <a class="btn btn-template-main" href="{{ path('category_promotion_list') }}">Отказ</a>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.box -->
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /#content -->
+{% endblock %}
+

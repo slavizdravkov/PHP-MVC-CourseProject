@@ -17,7 +17,6 @@ class ProductPromotionController extends Controller
      * @Route("admin/products-promotion/create", name="products_promotion_create")
      * @Method("GET")
      *
-     *
      * @return Response
      */
     public function createPromotion()
@@ -65,7 +64,7 @@ class ProductPromotionController extends Controller
     {
         $productPromotions = $this->getDoctrine()
             ->getRepository(ProductPromotion::class)
-            ->findAll();
+            ->fetchActiveProductPromotions();
 
         return $this->render('admin/promotions/products-promotion/list.html.twig',
             array('promotions' => $productPromotions));

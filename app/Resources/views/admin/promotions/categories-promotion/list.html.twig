@@ -45,7 +45,7 @@
                                     <th style="text-align: center">Намаление</th>
                                     <th style="text-align: center">Начална дата</th>
                                     <th style="text-align: center">Крайна дата</th>
-                                    <th style="text-align: center">Брой продукти в промоцията</th>
+                                    <th style="text-align: center">Брой категории в промоцията</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -53,13 +53,13 @@
                                     <tr>
                                         <th style="text-align: center">{{ promotion.id }}</th>
                                         <td align="center">{{ promotion.percent }} %</td>
-                                        <td align="center">{{ promotion.startData | date('d-m-Y') }} г.</td>
-                                        <td align="center">{{ promotion.endData | date('d-m-Y') }} г.</td>
-                                        <td align="center">{{ promotion.products.count }}</td>
+                                        <td align="center">{{ promotion.startDate | date('d-m-Y') }} г.</td>
+                                        <td align="center">{{ promotion.endDate | date('d-m-Y') }} г.</td>
+                                        <td align="center">{{ promotion.categories.count }}</td>
                                         <td align="center">
                                             <a href="#" class="btn btn-template-main btn-sm">Редакция</a>
-                                            {% if promotion.products.count == 0 %}
-                                                <a href="{{ path('products_promotion_add_product', {'id': promotion.id}) }}" class="btn btn-template-main btn-sm">Добаряне на продукти</a>
+                                            {% if promotion.categories.count == 0 %}
+                                                <a href="{{ path('category_promotion_add_category', {'id': promotion.id}) }}" class="btn btn-template-main btn-sm">Добаряне на категории</a>
                                             {% endif %}
                                             <a href="#" class="btn btn-template-main btn-sm">Изтриване</a>
                                         </td>
@@ -81,5 +81,6 @@
         <!-- /.container -->
     </div>
     <!-- /#content -->
+
 {% endblock %}
 

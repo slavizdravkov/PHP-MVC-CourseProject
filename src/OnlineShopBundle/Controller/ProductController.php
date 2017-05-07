@@ -28,12 +28,15 @@ class ProductController extends Controller
             return $a->getPrice() > $b->getPrice();
         });
 
+        $calc = $this->get('price_calculator');
+
         return $this->render
         ('shop/products.html.twig',
             [
                 'category' => $category,
                 'products' => $products,
-                'categories' => $categories
+                'categories' => $categories,
+                'calc' => $calc
             ]
         );
     }
@@ -41,17 +44,24 @@ class ProductController extends Controller
     /**
      * @Route("/product/view/{id}", name="view_product")
      *
-     * @param $id
+     * @param Product $product
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function productView($id)
+    public function productView(Product $product)
     {
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
-        $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
+        //$product = $this->getDoctrine()->getRepository(Product::class)->find($id);
 
-        return $this->render('shop/viewproduct.html.twig', ['product' => $product, 'categories' => $categories]);
+        $calc = $this->get('price_calculator');
+
+        return $this->render('shop/viewproduct.html.twig',
+            [
+                'product' => $product,
+                'categories' => $categories,
+                'calc' => $calc
+            ]);
     }
 
 }

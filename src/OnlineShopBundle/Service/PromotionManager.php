@@ -3,33 +3,79 @@
 namespace OnlineShopBundle\Service;
 
 
+use OnlineShopBundle\Entity\Category;
+use OnlineShopBundle\Entity\CategoryPromotion;
 use OnlineShopBundle\Entity\Product;
 use OnlineShopBundle\Entity\ProductPromotion;
+use OnlineShopBundle\Repository\CategoryPromotionRepository;
 use OnlineShopBundle\Repository\ProductPromotionRepository;
 
 class PromotionManager
 {
     /**
+     * Масив с всички активни промоции на продукти
+     *
      * @var ProductPromotion[]
      */
     protected $product_promotions;
 
+    /**
+     * Масив с всички активни промоции на категории
+     *
+     * @var CategoryPromotion[]
+     */
     protected $category_promotions;
 
     /**
+     * Масив с всички промоционални продукти
+     *
      * @var Product[]
      */
     protected $promotional_products;
 
     /**
+     * Асоциативен масив ProductID => отстъпка
+     *
      * @var array
      */
     protected $products_discount;
 
-    public function __construct(ProductPromotionRepository $repository)
+    /**
+     * Отстъпката, ако има активирана промоция на всички продукти
+     *
+     * @var integer
+     */
+    protected $all_product_discount;
+
+    public function __construct(ProductPromotionRepository $productPromotionRepository,
+                                CategoryPromotionRepository $categoryPromotionRepository)
     {
-        $this->product_promotions = $repository->fetchActiveProductPromotions();
+        $this->product_promotions = $productPromotionRepository->fetchActiveProductPromotions();
+        $this->category_promotions = $categoryPromotionRepository->fetchActiveCategoryPromotions();
         $this->products_discount = $this->getProductsWithPromotions();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAllProductPromotion()
+    {
+
+        foreach ($this->product_promotions as $promotion) {
+
+            $productsInPromotion = $promotion->getProducts()->count();
+
+            if ($productsInPromotion === 0) {
+
+                $this->all_product_discount = $promotion->getPercent();
+
+                return true;
+            }
+
+
+        }
+
+        return false;
     }
 
     /**
@@ -46,7 +92,9 @@ class PromotionManager
         foreach ($productPromotions as $productPromotion) {
             /** @var Product[] $products */
             $products = $productPromotion->getProducts();
+
             $promotion = $productPromotion->getPercent();
+
             foreach ($products as $product) {
                 if (!array_key_exists($product->getId(), $promotionalProducts)) {
                     $promotionalProducts[$product->getId()] = $promotion;
@@ -85,6 +133,46 @@ class PromotionManager
         return $this->products_discount;
     }
 
+    /**
+     * @return int
+     */
+    public function getAllProductDiscount()
+    {
+        return $this->all_product_discount;
+    }
+
+    /**
+     * @return CategoryPromotion[]
+     */
+    public function getCategoryPromotions()
+    {
+        return $this->category_promotions;
+    }
 
 
+    /**
+     * Връща промоцията за съответната категория
+     *
+     * @param Category $category
+     *
+     * @return integer
+     */
+    public function categoryPromotion($category)
+    {
+        $activePromotions = $this->getCategoryPromotions();
+
+        foreach ($activePromotions as $activePromotion) {
+
+            $promotionalCategories = $activePromotion->getCategories();
+
+            foreach ($promotionalCategories as $promotionalCategory) {
+
+                if ($promotionalCategory->getId() === $category->getId()) {
+                    return $activePromotion->getPercent();
+                }
+            }
+        }
+
+        return 0;
+    }
 }

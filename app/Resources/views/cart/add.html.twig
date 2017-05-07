@@ -40,27 +40,29 @@
                                     <thead>
                                     <tr>
                                         <th colspan="2">Продукт</th>
-                                        <th>Количество</th>
-                                        <th>Единична цена</th>
-                                        <th colspan="2">Общо</th>
+                                        <th style="text-align: center">Количество</th>
+                                        <th style="text-align: center">Наличност</th>
+                                        <th style="text-align: center">Единична цена</th>
+                                        <th style="text-align: center">Общо</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {% for product in cart_products %}
                                         <tr>
-                                            <td>
+                                            <td align="center">
                                                 <a href="#">
                                                     <img src="{{ asset('uploads/images/' ~ product.product.imageUrl) }}" alt="White Blouse Armani">
                                                 </a>
                                             </td>
-                                            <td><a href="#">{{ product.product.name }}</a>
+                                            <td align="center"><a href="#">{{ product.product.name }}</a>
                                             </td>
-                                            <td>
+                                            <td align="center">
                                                 <input type="number" value="{{ product.qty }}" class="form-control" name="quantity[{{ product.id }}]">
                                             </td>
-                                            <td>{{ product.product.price }} лв.</td>
-                                            <td>{{ product.productPrice }} лв.</td>
-                                            <td><a href="{{ path('cart_delete_product', {'id': product.id}) }}"><i class="fa fa-trash-o"></i></a>
+                                            <td align="center">{{ product.product.quantity }} бр.</td>
+                                            <td align="center">{{ calc.Calculate(product.product) | number_format(2) }} лв.</td>
+                                            <td align="center">{{ product.productPrice }} лв.</td>
+                                            <td align="center"><a href="{{ path('cart_delete_product', {'id': product.id}) }}"><i class="fa fa-trash-o"></i></a>
                                             </td>
                                         </tr>
                                     {% endfor %}

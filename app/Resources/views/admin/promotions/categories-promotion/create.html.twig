@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div id="heading-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1>Добавяне на промоция за категория</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="box">
+
+                    <hr>
+
+                    {{ form_start(createPromotionForm) }}
+                    {{ form_row(createPromotionForm.percent) }}
+                    {{ form_row(createPromotionForm.startDate) }}
+                    {{ form_row(createPromotionForm.endDate) }}
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-template-main"><i class="fa fa-sign-in"></i> Добавяне</button>
+                        <a class="btn btn-template-main" href="{{ path('categories_list') }}">Отказ</a>
+                    </div>
+                    {{ form_end(createPromotionForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -27,9 +27,9 @@
                                     <thead>
                                     <tr>
                                         <th colspan="2">Продукт</th>
-                                        <th>Количество</th>
-                                        <th>Единична цена</th>
-                                        <th colspan="2">Общо</th>
+                                        <th style="text-align: center">Количество</th>
+                                        <th style="text-align: center">Единична цена</th>
+                                        <th style="text-align: center">Общо</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -39,9 +39,9 @@
                                                 <img src="{{ asset('uploads/images/' ~ product.product.imageUrl) }}">
                                             </td>
                                             <td>{{ product.product.name }}</td>
-                                            <td>{{ product.qty }}</td>
-                                            <td>{{ product.product.price }} лв.</td>
-                                            <td>{{ product.productPrice }} лв.</td>
+                                            <td align="center">{{ product.qty }}</td>
+                                            <td align="center">{{ calc.Calculate(product.product) | number_format(2) }} лв.</td>
+                                            <td align="center">{{ product.productPrice }} лв.</td>
                                         </tr>
                                     {% endfor %}
 
@@ -68,27 +68,27 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Име</th>
-                                            <th>Фамилия</th>
-                                            <th>Град</th>
-                                            <th>Пощ. код</th>
-                                            <th>Адрес</th>
-                                            <th>Email</th>
-                                            <th>Телефон</th>
-                                            <th>Метод на плащане</th>
+                                            <th style="text-align: center">Име</th>
+                                            <th style="text-align: center">Фамилия</th>
+                                            <th style="text-align: center">Град</th>
+                                            <th style="text-align: center">Пощ. код</th>
+                                            <th style="text-align: center">Адрес</th>
+                                            <th style="text-align: center">Email</th>
+                                            <th style="text-align: center">Телефон</th>
+                                            <th style="text-align: center">Метод на плащане</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>{{ cart.shipFirstName }}</td>
-                                            <td>{{ cart.shipLastName }}</td>
-                                            <td>{{ cart.shipCity }}</td>
-                                            <td>{{ cart.shipZipCode }}</td>
-                                            <td>{{ cart.shipAddress }}</td>
-                                            <td>{{ cart.shipEmail }}</td>
-                                            <td>{{ cart.shipPhone }}</td>
-                                            <td>{{ cart.paymentMethod }}</td>
-                                            <td>
+                                            <td align="center">{{ cart.shipFirstName }}</td>
+                                            <td align="center">{{ cart.shipLastName }}</td>
+                                            <td align="center">{{ cart.shipCity }}</td>
+                                            <td align="center">{{ cart.shipZipCode }}</td>
+                                            <td align="center">{{ cart.shipAddress }}</td>
+                                            <td align="center">{{ cart.shipEmail }}</td>
+                                            <td align="center">{{ cart.shipPhone }}</td>
+                                            <td align="center">{{ cart.paymentMethod }}</td>
+                                            <td align="center">
                                                 <a href="{{ path('cart_checkout', {'id': cart.id}) }}" class="btn btn-template-main btn-sm">Редакция</a>
                                             </td>
                                         </tr>
