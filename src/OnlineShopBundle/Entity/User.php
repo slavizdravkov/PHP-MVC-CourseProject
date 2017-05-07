@@ -33,7 +33,7 @@ class User implements UserInterface
      * @ORM\Column(name="email", type="string", length=255, unique=true)
      *
      * @Assert\NotBlank()
-     * @Assert\Email(message="Въведения мейл адрес '{{ value }}' не е валиден")
+     * @Assert\Email(message="Въведения мейл адрес {{ value }} не е валиден")
      */
     private $email;
 
@@ -56,6 +56,7 @@ class User implements UserInterface
      * @ORM\Column(name="first_name", type="string", length=255)
      *
      * @Assert\NotBlank()
+     * @Assert\Length(min="3")
      */
     private $firstName;
 
@@ -65,6 +66,7 @@ class User implements UserInterface
      * @ORM\Column(name="last_name", type="string", length=255)
      *
      * @Assert\NotBlank()
+     * @Assert\Length(min="3")
      */
     private $lastName;
 

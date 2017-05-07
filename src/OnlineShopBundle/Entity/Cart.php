@@ -3,6 +3,7 @@
 namespace OnlineShopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Cart
@@ -33,6 +34,12 @@ class Cart
      * @var string
      *
      * @ORM\Column(name="ship_first_name", type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="3",
+     *     minMessage="Минималния брой символи трябва да бъде 3"
+     * )
      */
     private $shipFirstName;
 
@@ -40,6 +47,12 @@ class Cart
      * @var string
      *
      * @ORM\Column(name="ship_last_name", type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="3",
+     *     minMessage="Минималния брой символи трябва да бъде 3"
+     * )
      */
     private $shipLastName;
 
@@ -47,6 +60,12 @@ class Cart
      * @var string
      *
      * @ORM\Column(name="ship_city", type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="3",
+     *     minMessage="Минималния брой символи трябва да бъде 3"
+     * )
      */
     private $shipCity;
 
@@ -54,6 +73,8 @@ class Cart
      * @var string
      *
      * @ORM\Column(name="ship_zip_code", type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
     private $shipZipCode;
 
@@ -61,6 +82,8 @@ class Cart
      * @var string
      *
      * @ORM\Column(name="ship_address", type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
     private $shipAddress;
 
@@ -68,6 +91,9 @@ class Cart
      * @var string
      *
      * @ORM\Column(name="ship_email", type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     * @Assert\Email(message="Въведения мейл адрес {{ value }} не е валиден")
      */
     private $shipEmail;
 
@@ -76,6 +102,8 @@ class Cart
      * @var string
      *
      * @ORM\Column(name="ship_phone", type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
     private $shipPhone;
 

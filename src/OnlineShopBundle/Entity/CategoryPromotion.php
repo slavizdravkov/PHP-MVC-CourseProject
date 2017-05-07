@@ -4,6 +4,7 @@ namespace OnlineShopBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * CategoryPromotion
@@ -26,6 +27,16 @@ class CategoryPromotion
      * @var int
      *
      * @ORM\Column(name="percent", type="integer")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Type(
+     *     type="integer",
+     *     message="Въведената стойност {{ value }} не е валиден целочислен тип"
+     * )
+     * @Assert\Range(
+     *     min="0",
+     *     minMessage="Стойността в това поле не трябва да бъде отрицателна"
+     * )
      */
     private $percent;
 

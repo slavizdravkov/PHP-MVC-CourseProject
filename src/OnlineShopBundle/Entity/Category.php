@@ -32,6 +32,10 @@ class Category
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      *
      * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="3",
+     *     minMessage="Минималния брой символи трябва да бъде 3"
+     * )
      */
     private $name;
 

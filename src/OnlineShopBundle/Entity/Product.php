@@ -30,6 +30,10 @@ class Product
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      *
      * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min="3",
+     *     minMessage="Минималния брой символи трябва да бъде 3"
+     * )
      */
     private $name;
 
@@ -57,6 +61,14 @@ class Product
      * @ORM\Column(name="quantity", type="integer")
      *
      * @Assert\NotBlank()
+     * @Assert\Type(
+     *     type="integer",
+     *     message="Въведената стойност {{ value }} не е валиден целочислен тип"
+     * )
+     * @Assert\Range(
+     *     min="0",
+     *     minMessage="Стойността в това поле не трябва да бъде отрицателна"
+     * )
      */
     private $quantity;
 
@@ -66,6 +78,10 @@ class Product
      * @ORM\Column(name="price", type="decimal", precision=10, scale=2)
      *
      * @Assert\NotBlank()
+     * @Assert\Range(
+     *     min="0",
+     *     minMessage="Стойността в това поле не трябва да бъде отрицателна"
+     * )
      */
     private $price;
 
@@ -80,7 +96,7 @@ class Product
      *
      * @ORM\Column(name="image_url", type="string", length=255)
      *
-     * @Assert\Image(mimeTypes={"image/jpeg", "image/png"})
+     * @Assert\Image(mimeTypes={"image/jpeg", "image/png", "image/tiff"})
      */
     private $imageUrl;
 
