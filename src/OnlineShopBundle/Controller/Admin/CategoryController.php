@@ -88,6 +88,10 @@ class CategoryController extends Controller
      */
     public function editCategories(Request $request, Category $category)
     {
+        if ($category === null) {
+            return $this->redirectToRoute('categories_list');
+        }
+
         $editForm = $this->createForm(CategoryType::class, $category);
         $editForm->handleRequest($request);
 
@@ -116,6 +120,10 @@ class CategoryController extends Controller
      */
     public function deleteCategory(Request $request, Category $category)
     {
+        if ($category === null) {
+            return $this->redirectToRoute('categories_list');
+        }
+
         $deleteForm = $this->createForm(CategoryType::class, $category);
         $deleteForm->handleRequest($request);
 

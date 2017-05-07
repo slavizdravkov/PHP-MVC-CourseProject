@@ -80,6 +80,10 @@ class CategoryPromotionController extends Controller
      */
     public function addCategoryPromotions(Request $request, CategoryPromotion $promotion)
     {
+        if ($promotion === null) {
+            return $this->redirectToRoute('category_promotion_list');
+        }
+
         $categories = $this->getDoctrine()
             ->getRepository(Category::class)
             ->findAll();

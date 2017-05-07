@@ -95,13 +95,16 @@ class ProductController extends Controller
      * @Route("/admin/product/edit/{id}", name="product_edit")
      *
      * @param Request $request
-     * @param $id
+     * @param Product $product
      *
      * @return Response
      */
-    public function editProduct(Request $request, $id)
+    public function editProduct(Request $request, Product $product)
     {
-        $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
+        if ($product === null) {
+            return $this->redirectToRoute('products_list');
+        }
+
         $oldImageName = $product->getImageUrl();
 
 //        $product->setImageUrl(
@@ -150,6 +153,10 @@ class ProductController extends Controller
      */
     public function deleteProduct(Request $request, Product $product)
     {
+        if ($product === null) {
+            return $this->redirectToRoute('products_list');
+        }
+
         $imageName = $product->getImageUrl();
         $deleteForm = $this->createForm(ProductType::class, $product);
         $deleteForm->handleRequest($request);

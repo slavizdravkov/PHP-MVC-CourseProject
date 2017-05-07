@@ -80,6 +80,10 @@ class ProductPromotionController extends Controller
      */
     public function addPromotionalProducts(Request $request, ProductPromotion $promotion)
     {
+        if ($promotion === null) {
+            return $this->redirectToRoute('products_promotion_list');
+        }
+
         $products = $this->getDoctrine()
             ->getRepository(Product::class)
             ->findAll();

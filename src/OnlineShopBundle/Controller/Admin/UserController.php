@@ -39,6 +39,7 @@ class UserController extends Controller
         if ($user === null) {
             return $this->redirectToRoute('users_list');
         }
+
         $originalPassword = $user->getPassword();
         $editForm = $this->createForm(UserEditType::class, $user);
         $editForm->handleRequest($request);
