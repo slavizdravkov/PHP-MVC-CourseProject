@@ -24,7 +24,7 @@ class CartProduct
     /**
      * @var Cart
      *
-     * @ORM\ManyToOne(targetEntity="OnlineShopBundle\Entity\Cart")
+     * @ORM\ManyToOne(targetEntity="OnlineShopBundle\Entity\Cart", inversedBy="cartProduct")
      * @ORM\JoinColumn(name="cart_id", referencedColumnName="id")
      */
     private $cart;
@@ -36,6 +36,14 @@ class CartProduct
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     private $product;
+
+    /**
+     * @var UserProduct
+     *
+     * @ORM\ManyToOne(targetEntity="OnlineShopBundle\Entity\UserProduct")
+     * @ORM\JoinColumn(name="userproduct_id", referencedColumnName="id")
+     */
+    private $userProduct;
 
     /**
      * @var int
@@ -140,6 +148,22 @@ class CartProduct
     public function getProductPrice()
     {
         return $this->productPrice;
+    }
+
+    /**
+     * @return UserProduct
+     */
+    public function getUserProduct()
+    {
+        return $this->userProduct;
+    }
+
+    /**
+     * @param UserProduct $userProduct
+     */
+    public function setUserProduct(UserProduct $userProduct)
+    {
+        $this->userProduct = $userProduct;
     }
 }
 

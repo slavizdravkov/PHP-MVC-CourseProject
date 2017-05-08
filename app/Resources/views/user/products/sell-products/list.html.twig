@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="heading-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1>Списък на обявените за продажба продукти</h1>
+                </div>
+
+                {% if app.session.flashBag.has('success') %}
+                    <div class="col-md-5">
+                        <ul class="breadcrumb">
+                            {% for msg in app.session.flashBag.get('success') %}
+                                <li>
+                                    {{ msg }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    <div id="content">
+        <div class="container">
+
+
+            <div class="row">
+
+                <!-- *** LEFT COLUMN ***
+         _________________________________________________________ -->
+
+                <div class="col-md-12">
+
+                    <div class="box">
+
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: center">Снимка</th>
+                                    <th style="text-align: center">ID</th>
+                                    <th style="text-align: center">Категория</th>
+                                    <th style="text-align: center">Име</th>
+                                    <th style="text-align: center">Описание</th>
+                                    <th style="text-align: center">Количество</th>
+                                    <th style="text-align: center">Цена</th>
+                                    <th style="text-align: center">Действие</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for product in sellProducts %}
+                                    <tr>
+                                        <td align="center"><img src="{{ asset('uploads/images/' ~ product.imageUrl) }}" alt="" class="image" width="30 px"></td>
+                                        <th style="text-align: center">{{ product.id }}</th>
+                                        <td align="center"><span class="label label-success">{{ product.category }}</span>
+                                        <td align="center">{{ product.name }}</td>
+                                        <td align="center">{{ product.description }}</td>
+                                        <td align="center">{{ product.quantity }}</td>
+                                        <td align="center">{{ product.price }} лв.</td>
+                                        <td align="center">
+                                            <a href="#" class="btn btn-template-main btn-sm">Редакция</a>
+                                            <a href="#" class="btn btn-template-main btn-sm">Изтриване</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+
+                    </div>
+                    <!-- /.box -->
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /#content -->
+
+{% endblock %}

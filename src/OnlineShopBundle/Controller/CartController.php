@@ -6,6 +6,7 @@ use OnlineShopBundle\Entity\Cart;
 use OnlineShopBundle\Entity\CartProduct;
 use OnlineShopBundle\Entity\Product;
 use OnlineShopBundle\Entity\User;
+use OnlineShopBundle\Entity\UserProduct;
 use OnlineShopBundle\Form\CartCheckoutType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -48,14 +49,20 @@ class CartController extends Controller
     /**
      * @Route("/cart/add/{id}", name="cart_add")
      *
-     * @param Product $product
+     * @param $id
      *
      * @return Response
      */
-    public function addAction(Product $product)
+    public function addAction($id)
     {
         /** @var User $user */
         $user = $this->getUser();
+
+        $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
+
+        if (!$product) {
+            $product = $this->getDoctrine()->getRepository(UserProduct::class)->find($id);
+        }
 
         $calc = $this->get('price_calculator');
 
@@ -99,7 +106,11 @@ class CartController extends Controller
             if (!$cartProduct) {
                 $cartProduct = new CartProduct();
                 $cartProduct->setCart($cart);
-                $cartProduct->setProduct($product);
+                if ($product instanceof Product) {
+                    $cartProduct->setProduct($product);
+                } else {
+                    $cartProduct->setUserProduct($product);
+                }
                 $cartProduct->setQty(1);
                 $cartProduct->setProductPrice($calc->Calculate($product));
             } else {
@@ -144,8 +155,13 @@ class CartController extends Controller
 
             if ($cartProduct) {
                 $cartProduct->setQty($quantity);
-                $cartProduct
-                    ->setProductPrice(round($calc->Calculate($cartProduct->getProduct()), 2) * $cartProduct->getQty());
+                if ($cartProduct->getProduct()) {
+                    $cartProduct
+                        ->setProductPrice(round($calc->Calculate($cartProduct->getProduct()), 2) * $cartProduct->getQty());
+                } else {
+                    $cartProduct
+                        ->setProductPrice(round($calc->Calculate($cartProduct->getUserProduct()), 2) * $cartProduct->getQty());
+                }
                 $em->persist($cartProduct);
                 $em->flush();
 
@@ -224,6 +240,13 @@ class CartController extends Controller
      */
     public function orderAction(Request $request)
     {
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if (!$user) {
+            return $this->redirectToRoute('homepage');
+        }
+
         $session = $this->get('session');
 
         $cart_id = $session->get('cart_id', false);
@@ -244,8 +267,11 @@ class CartController extends Controller
 
         if ($request->isMethod('POST')){
             $cart->setAmount($total);
+            $cart->setDateUpdated(new \DateTime());
+            $user->setCash($user->getCash() - $total);
 
             $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
             $em->persist($cart);
             $em->flush();
 

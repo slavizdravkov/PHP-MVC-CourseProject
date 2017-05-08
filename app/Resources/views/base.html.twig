@@ -84,7 +84,7 @@
                                                 <a href="#">Продукти</a>
                                             </li>
                                             <li>
-                                                <a href="#">Продукти на други потребители</a>
+                                                <a href="{{ path('userproducts_list') }}">Продукти на други потребители</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -107,7 +107,10 @@
                                             <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown">Продай свой продукт <b class="caret"></b></a>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a href="#">Списък на всички закупени от магазина продукти</a>
+                                                    <a href="{{ path('user_products_list') }}">Списък на всички закупени от магазина продукти</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ path('user_sell_products_list') }}">Списък на обявените за продажба продукти</a>
                                                 </li>
                                             </ul>
                                         </li>

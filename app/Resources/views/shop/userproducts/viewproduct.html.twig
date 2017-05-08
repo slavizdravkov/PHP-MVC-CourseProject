@@ -38,14 +38,7 @@
 
                                     </div>
 
-                                    {% set promotional_price = calc.Calculate(product) %}
-                                    {% if promotional_price != product.price %}
-                                        <p class="price">
-                                            <del>{{ product.price | number_format(2) }} лв.</del> {{ promotional_price | number_format(2) }} лв.
-                                        </p>
-                                    {% else %}
-                                        <p class="price">{{ product.price }} лв.</p>
-                                    {% endif %}
+                                    <p class="price">{{ product.price }} лв.</p>
 
                                     <p class="text-center">
                                         <button type="submit" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i> Добави в количката</button>
@@ -56,15 +49,6 @@
 
                         </div>
 
-                    </div>
-
-
-                    <div class="box" id="details">
-                        <p>
-                        <h4>Описание на продукта</h4>
-                        <p>{{ product.description }}</p>
-                        <h4>Размер</h4>
-                        <p>{{ product.size }}</p>
                     </div>
 
                 </div>
@@ -89,17 +73,11 @@ _________________________________________________________ -->
                         <div class="panel-body">
                             <ul class="nav nav-pills nav-stacked category-menu">
                                 {% for category in categories %}
-                                    {% if product.category.name == category.name %}
-                                        <li class="active">
-                                            <a href="{{ path('products_by_category', {'id': category.id}) }}">{{ category.name }} <span class="badge pull-right"></span></a>
-                                        </li>
-                                    {% else %}
-                                        <li>
-                                            <a href="{{ path('products_by_category', {'id': category.id}) }}">{{ category.name }} <span class="badge pull-right"></span></a>
-                                        </li>
-                                    {% endif %}
+                                    <li>
+                                        <a href="{{ path('products_by_category', {'id': category.id}) }}">{{ category.name }} <span class="badge pull-right"></span></a>
+                                    </li>
                                 {% endfor %}
-                                <li>
+                                <li class="active">
                                     <a href="{{ path('userproducts_list') }}">Продукти на други потребители <span class="badge pull-right"></span></a>
                                 </li>
                             </ul>
@@ -111,5 +89,5 @@ _________________________________________________________ -->
             </div>
         </div>
     </div>
-
 {% endblock %}
+

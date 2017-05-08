@@ -48,6 +48,7 @@
                                     </thead>
                                     <tbody>
                                     {% for product in cart_products %}
+                                        {% if product.product %}
                                         <tr>
                                             <td align="center">
                                                 <a href="#">
@@ -65,6 +66,25 @@
                                             <td align="center"><a href="{{ path('cart_delete_product', {'id': product.id}) }}"><i class="fa fa-trash-o"></i></a>
                                             </td>
                                         </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td align="center">
+                                                    <a href="#">
+                                                        <img src="{{ asset('uploads/images/' ~ product.userProduct.imageUrl) }}" alt="White Blouse Armani">
+                                                    </a>
+                                                </td>
+                                                <td align="center"><a href="#">{{ product.userProduct.name }}</a>
+                                                </td>
+                                                <td align="center">
+                                                    <input type="number" value="{{ product.qty }}" class="form-control" name="quantity[{{ product.id }}]">
+                                                </td>
+                                                <td align="center">{{ product.userProduct.quantity }} бр.</td>
+                                                <td align="center">{{ product.userProduct.price }} лв.</td>
+                                                <td align="center">{{ product.productPrice }} лв.</td>
+                                                <td align="center"><a href="{{ path('cart_delete_product', {'id': product.id}) }}"><i class="fa fa-trash-o"></i></a>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
                                     {% endfor %}
 
                                     </tbody>

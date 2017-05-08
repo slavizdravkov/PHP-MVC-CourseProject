@@ -4,6 +4,7 @@ namespace OnlineShopBundle\Controller;
 
 use OnlineShopBundle\Entity\Category;
 use OnlineShopBundle\Entity\Product;
+use OnlineShopBundle\Entity\UserProduct;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,7 @@ class ProductController extends Controller
 
         $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
 
-        /** @var Product[] $products */
+        /** @var Product[]|UserProduct[] $products */
         $products = $category->getProducts()->toArray();
         usort($products, function ($a, $b){
             return $a->getPrice() > $b->getPrice();

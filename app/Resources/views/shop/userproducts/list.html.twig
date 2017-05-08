@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-7">
-                    <h1>Продукти в промоция</h1>
+                    <h1>Продукти на други потребители</h1>
                 </div>
             </div>
         </div>
@@ -32,12 +32,12 @@ _________________________________________________________ -->
 
                         <div class="panel-body">
                             <ul class="nav nav-pills nav-stacked category-menu">
-                                {% for category in categories %}
+                                {% for currentCategory in categories %}
                                     <li>
-                                        <a href="{{ path('products_by_category', {'id': category.id}) }}">{{ category.name }} <span class="badge pull-right"></span></a>
+                                        <a href="{{ path('products_by_category', {'id': currentCategory.id}) }}">{{ currentCategory.name }} <span class="badge pull-right"></span></a>
                                     </li>
                                 {% endfor %}
-                                <li>
+                                <li class="active">
                                     <a href="{{ path('userproducts_list') }}">Продукти на други потребители <span class="badge pull-right"></span></a>
                                 </li>
                             </ul>
@@ -56,40 +56,28 @@ _________________________________________________________ -->
 
 
                     <div class="row products">
-
                         {% for product in products %}
                             <div class="col-md-4 col-sm-6">
                                 <div class="product">
                                     <div class="image">
-                                        <a href="{{ path('view_product', {'id': product.id}) }}">
+                                        <a href="{{ path('userproducts_view', {'id': product.id}) }}">
                                             <img src="{{ asset('uploads/images/' ~ product.imageUrl) }}" alt="" class="img-responsive image1">
                                         </a>
                                     </div>
                                     <!-- /.image -->
                                     <div class="text">
-                                        <h3><a href="{{ path('view_product', {'id': product.id}) }}">{{ product.name }}</a></h3>
-                                        {% set promotional_price = calc.Calculate(product) %}
-                                        <p class="price">
-                                            <del>{{ product.price | number_format(2) }} лв.</del> {{ promotional_price | number_format(2) }} лв.
-                                        </p>
+                                        <h3><a href="{{ path('userproducts_view', {'id': product.id}) }}">{{ product.name }}</a></h3>
+                                        <p class="price">{{ product.price }} лв.</p>
                                         <p class="buttons">
                                             <a href="#" class="btn btn-default">View detail</a>
                                             <a href="#" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                         </p>
                                     </div>
                                     <!-- /.text -->
-
-                                    <div class="ribbon sale">
-                                        <div class="theribbon">SALE</div>
-                                        <div class="ribbon-background"></div>
-                                    </div>
-                                    <!-- /.ribbon -->
-
                                 </div>
                                 <!-- /.product -->
                             </div>
                         {% endfor %}
-
                     </div>
                     <!-- /.products -->
 
@@ -134,5 +122,5 @@ _________________________________________________________ -->
 
     <!-- *** GET IT ***
 _________________________________________________________ -->
-
 {% endblock %}
+

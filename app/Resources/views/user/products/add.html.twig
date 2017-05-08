@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="heading-breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <h1>Продажба на потребителски продукт</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="box">
+
+                    <hr>
+
+                    {{ form_start(sellForm) }}
+                    {{ form_row(sellForm.name) }}
+                    {{ form_row(sellForm.description) }}
+                    {{ form_row(sellForm.size) }}
+                    {{ form_row(sellForm.quantity) }}
+                    {{ form_row(sellForm.price) }}
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-template-main"><i class="fa fa-save"></i> Продай</button>
+                        <a class="btn btn-template-main" href="{{ path('user_products_list') }}">Отказ</a>
+                    </div>
+                    {{ form_end(sellForm) }}
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+{% endblock %}
+

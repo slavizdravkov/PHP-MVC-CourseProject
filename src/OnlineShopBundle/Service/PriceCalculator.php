@@ -4,6 +4,7 @@ namespace OnlineShopBundle\Service;
 
 
 use OnlineShopBundle\Entity\Product;
+use OnlineShopBundle\Entity\UserProduct;
 
 class PriceCalculator
 {
@@ -16,7 +17,7 @@ class PriceCalculator
     }
 
     /**
-     * @param Product $product
+     * @param Product|UserProduct $product
      *
      * @return float
      */

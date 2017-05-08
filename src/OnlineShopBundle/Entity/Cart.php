@@ -2,6 +2,7 @@
 
 namespace OnlineShopBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -135,6 +136,13 @@ class Cart
      */
     private $dateUpdated;
 
+    /**
+     * @var CartProduct[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="OnlineShopBundle\Entity\CartProduct", mappedBy="cart")
+     */
+    private $cartProduct;
+
     public function __construct($shipFirstName, $shipLastName, $shipCity, $shipAddress, $shipEmail)
     {
         $this->shipFirstName = $shipFirstName;
@@ -146,6 +154,7 @@ class Cart
         $this->shipPhone = "";
         $this->amount = 0.00;
         $this->paymentMethod = "";
+        $this->cartProduct = new ArrayCollection();
     }
 
 
@@ -383,5 +392,20 @@ class Cart
         $this->paymentMethod = $paymentMethod;
     }
 
+    /**
+     * @return ArrayCollection|CartProduct[]
+     */
+    public function getCartProduct()
+    {
+        return $this->cartProduct;
+    }
+
+    /**
+     * @param ArrayCollection|CartProduct[] $cartProduct
+     */
+    public function setCartProduct($cartProduct)
+    {
+        $this->cartProduct = $cartProduct;
+    }
 }
 

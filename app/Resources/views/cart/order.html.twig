@@ -34,15 +34,27 @@
                                     </thead>
                                     <tbody>
                                     {% for product in cart_products %}
-                                        <tr>
-                                            <td>
-                                                <img src="{{ asset('uploads/images/' ~ product.product.imageUrl) }}">
-                                            </td>
-                                            <td>{{ product.product.name }}</td>
-                                            <td align="center">{{ product.qty }}</td>
-                                            <td align="center">{{ calc.Calculate(product.product) | number_format(2) }} лв.</td>
-                                            <td align="center">{{ product.productPrice }} лв.</td>
-                                        </tr>
+                                        {% if product.product %}
+                                            <tr>
+                                                <td>
+                                                    <img src="{{ asset('uploads/images/' ~ product.product.imageUrl) }}">
+                                                </td>
+                                                <td>{{ product.product.name }}</td>
+                                                <td align="center">{{ product.qty }}</td>
+                                                <td align="center">{{ calc.Calculate(product.product) | number_format(2) }} лв.</td>
+                                                <td align="center">{{ product.productPrice }} лв.</td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td>
+                                                    <img src="{{ asset('uploads/images/' ~ product.userProduct.imageUrl) }}">
+                                                </td>
+                                                <td>{{ product.userProduct.name }}</td>
+                                                <td align="center">{{ product.qty }}</td>
+                                                <td align="center">{{ product.userProduct.price }} лв.</td>
+                                                <td align="center">{{ product.productPrice }} лв.</td>
+                                            </tr>
+                                        {% endif %}
                                     {% endfor %}
 
                                     </tbody>
