@@ -1,6 +1,7 @@
 <?php
 
 namespace OnlineShopBundle\Repository;
+use OnlineShopBundle\Entity\Category;
 
 /**
  * ProductRepository
@@ -18,5 +19,17 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
             WHERE p.price > :price
             ORDER BY p.price ASC'
         )->setParameter('price', 0)->getResult();
+    }
+
+    public function findProductByCategory(Category $category)
+    {
+        $db = $this->createQueryBuilder('p');
+        $db->select('p')
+            ->where($db->expr()->eq('p.category', ':category'))
+            ->andWhere($db->expr()->gt('p.quantity', 0))
+            ->orderBy('p.price', 'ASC')
+            ->setParameter('category', $category);
+
+        return $db->getQuery()->getResult();
     }
 }

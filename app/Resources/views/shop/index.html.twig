@@ -58,66 +58,46 @@ _________________________________________________________ -->
                     <div class="row products">
 
                         {% for product in products %}
-                            <div class="col-md-4 col-sm-6">
-                                <div class="product">
-                                    <div class="image">
-                                        <a href="{{ path('view_product', {'id': product.id}) }}">
-                                            <img src="{{ asset('uploads/images/' ~ product.imageUrl) }}" alt="" class="img-responsive image1">
-                                        </a>
-                                    </div>
-                                    <!-- /.image -->
-                                    <div class="text">
-                                        <h3><a href="{{ path('view_product', {'id': product.id}) }}">{{ product.name }}</a></h3>
-                                        {% set promotional_price = calc.Calculate(product) %}
-                                        <p class="price">
-                                            <del>{{ product.price | number_format(2) }} лв.</del> {{ promotional_price | number_format(2) }} лв.
-                                        </p>
-                                        <p class="buttons">
-                                            <a href="#" class="btn btn-default">View detail</a>
-                                            <a href="#" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </p>
-                                    </div>
-                                    <!-- /.text -->
+                            {% set promotional_price = calc.Calculate(product) %}
+                            {% if product.quantity > 0 and promotional_price != product.price %}
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="product">
+                                        <div class="image">
+                                            <a href="{{ path('view_product', {'id': product.id}) }}">
+                                                <img src="{{ asset('uploads/images/' ~ product.imageUrl) }}" alt="" class="img-responsive image1">
+                                            </a>
+                                        </div>
+                                        <!-- /.image -->
+                                        <div class="text">
+                                            <h3><a href="{{ path('view_product', {'id': product.id}) }}">{{ product.name }}</a></h3>
+                                            <p class="price">
+                                                <del>{{ product.price | number_format(2) }} лв.</del> {{ promotional_price | number_format(2) }} лв.
+                                            </p>
+                                            <p class="buttons">
+                                                <a href="#" class="btn btn-default">View detail</a>
+                                                <a href="#" class="btn btn-template-main"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </p>
+                                        </div>
+                                        <!-- /.text -->
 
-                                    <div class="ribbon sale">
-                                        <div class="theribbon">SALE</div>
-                                        <div class="ribbon-background"></div>
-                                    </div>
-                                    <!-- /.ribbon -->
+                                        <div class="ribbon sale">
+                                            <div class="theribbon">SALE</div>
+                                            <div class="ribbon-background"></div>
+                                        </div>
+                                        <!-- /.ribbon -->
 
+                                    </div>
+                                    <!-- /.product -->
                                 </div>
-                                <!-- /.product -->
-                            </div>
+                            {% endif %}
                         {% endfor %}
 
                     </div>
                     <!-- /.products -->
 
-
-                    <div class="pages">
-
-                        <p class="loadMore">
-                            <a href="#" class="btn btn-template-main"><i class="fa fa-chevron-down"></i> Load more</a>
-                        </p>
-
-                        <ul class="pagination">
-                            <li><a href="#">&laquo;</a>
-                            </li>
-                            <li class="active"><a href="#">1</a>
-                            </li>
-                            <li><a href="#">2</a>
-                            </li>
-                            <li><a href="#">3</a>
-                            </li>
-                            <li><a href="#">4</a>
-                            </li>
-                            <li><a href="#">5</a>
-                            </li>
-                            <li><a href="#">&raquo;</a>
-                            </li>
-                        </ul>
+                    <div class="navigation">
+                        {{ knp_pagination_render(products) }}
                     </div>
-
 
                 </div>
                 <!-- /.col-md-9 -->

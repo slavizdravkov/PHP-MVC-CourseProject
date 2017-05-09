@@ -4,9 +4,9 @@ namespace OnlineShopBundle\Controller;
 
 use OnlineShopBundle\Entity\Category;
 use OnlineShopBundle\Entity\Product;
-use OnlineShopBundle\Entity\UserProduct;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductController extends Controller
@@ -17,17 +17,33 @@ class ProductController extends Controller
      *
      * @return Response
      */
-    public function listArticles($id)
+    public function listArticles($id, Request $request)
     {
-        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+        $categories = $this->getDoctrine()
+            ->getRepository(Category::class)
+            ->findAll();
 
-        $category = $this->getDoctrine()->getRepository(Category::class)->find($id);
+        $category = $this->getDoctrine()
+            ->getRepository(Category::class)
+            ->find($id);
 
-        /** @var Product[]|UserProduct[] $products */
-        $products = $category->getProducts()->toArray();
-        usort($products, function ($a, $b){
-            return $a->getPrice() > $b->getPrice();
-        });
+        $products = $this->getDoctrine()
+            ->getRepository(Product::class)
+            ->findProductByCategory($category);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $products,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 6)
+        );
+
+//        /** @var Product[]|UserProduct[] $products */
+//        $products = $category->getProducts()->toArray();
+//
+//        usort($products, function ($a, $b){
+//            return $a->getPrice() > $b->getPrice();
+//        });
 
         $calc = $this->get('price_calculator');
 
@@ -35,7 +51,7 @@ class ProductController extends Controller
         ('shop/products.html.twig',
             [
                 'category' => $category,
-                'products' => $products,
+                'products' => $pagination,
                 'categories' => $categories,
                 'calc' => $calc
             ]
