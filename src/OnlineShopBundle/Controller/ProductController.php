@@ -31,6 +31,9 @@ class ProductController extends Controller
             ->getRepository(Product::class)
             ->findProductByCategory($category);
 
+        $promotionManager = $this->get('promotion_manager');
+        $categoriesInPromotion = $promotionManager->getCategoriesInPromotion();
+
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $products,
@@ -53,7 +56,8 @@ class ProductController extends Controller
                 'category' => $category,
                 'products' => $pagination,
                 'categories' => $categories,
-                'calc' => $calc
+                'calc' => $calc,
+                'categoriesInPromotion' => $categoriesInPromotion
             ]
         );
     }
@@ -73,11 +77,16 @@ class ProductController extends Controller
 
         $calc = $this->get('price_calculator');
 
+        $promotionManager = $this->get('promotion_manager');
+        $categoriesInPromotion = $promotionManager->getCategoriesInPromotion();
+
+
         return $this->render('shop/viewproduct.html.twig',
             [
                 'product' => $product,
                 'categories' => $categories,
-                'calc' => $calc
+                'calc' => $calc,
+                'categoriesInPromotion' => $categoriesInPromotion
             ]);
     }
 

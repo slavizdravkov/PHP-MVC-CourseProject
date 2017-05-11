@@ -33,11 +33,17 @@ _________________________________________________________ -->
                         <div class="panel-body">
                             <ul class="nav nav-pills nav-stacked category-menu">
                                 {% for currentCategory in categories %}
-                                    <li>
-                                        <a href="{{ path('products_by_category', {'id': currentCategory.id}) }}">{{ currentCategory.name }} <span class="badge pull-right"></span></a>
-                                    </li>
+                                    {% if currentCategory.id in categoriesInPromotion|keys %}
+                                        <li class="active">
+                                            <a href="{{ path('products_by_category', {'id': currentCategory.id}) }}">{{ currentCategory.name }} /в промоция/<span class="badge pull-right"></span></a>
+                                        </li>
+                                    {% else %}
+                                        <li>
+                                            <a href="{{ path('products_by_category', {'id': currentCategory.id}) }}">{{ currentCategory.name }} <span class="badge pull-right"></span></a>
+                                        </li>
+                                    {% endif %}
                                 {% endfor %}
-                                <li class="active">
+                                <li>
                                     <a href="{{ path('userproducts_list') }}">Продукти на други потребители <span class="badge pull-right"></span></a>
                                 </li>
                             </ul>
@@ -81,30 +87,6 @@ _________________________________________________________ -->
                     </div>
                     <!-- /.products -->
 
-
-                    <div class="pages">
-
-                        <p class="loadMore">
-                            <a href="#" class="btn btn-template-main"><i class="fa fa-chevron-down"></i> Load more</a>
-                        </p>
-
-                        <ul class="pagination">
-                            <li><a href="#">&laquo;</a>
-                            </li>
-                            <li class="active"><a href="#">1</a>
-                            </li>
-                            <li><a href="#">2</a>
-                            </li>
-                            <li><a href="#">3</a>
-                            </li>
-                            <li><a href="#">4</a>
-                            </li>
-                            <li><a href="#">5</a>
-                            </li>
-                            <li><a href="#">&raquo;</a>
-                            </li>
-                        </ul>
-                    </div>
 
 
                 </div>

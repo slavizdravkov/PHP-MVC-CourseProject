@@ -29,8 +29,9 @@ class HomeController extends Controller
             $request->query->getInt('page', 1),
             $request->query->getInt('limit', 6)
         );
-//        $promotionManager = $this->get('promotion_manager');
-//        $promotionalProducts = $promotionManager->getPromotionalProducts();
+
+        $promotionManager = $this->get('promotion_manager');
+        $categoriesInPromotion = $promotionManager->getCategoriesInPromotion();
 
         $calc = $this->get('price_calculator');
 //        dump($promotionalProducts);
@@ -39,7 +40,8 @@ class HomeController extends Controller
             [
                 'categories' => $categories,
                 'products' => $pagination,
-                'calc' => $calc
+                'calc' => $calc,
+                'categoriesInPromotion' => $categoriesInPromotion
             ]);
     }
 

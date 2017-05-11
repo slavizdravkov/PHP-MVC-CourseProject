@@ -33,9 +33,15 @@ _________________________________________________________ -->
                         <div class="panel-body">
                             <ul class="nav nav-pills nav-stacked category-menu">
                                 {% for category in categories %}
-                                    <li>
-                                        <a href="{{ path('products_by_category', {'id': category.id}) }}">{{ category.name }} <span class="badge pull-right"></span></a>
-                                    </li>
+                                    {% if category.id in categoriesInPromotion|keys %}
+                                        <li class="active">
+                                            <a href="{{ path('products_by_category', {'id': category.id}) }}">{{ category.name }} /в промоция/<span class="badge pull-right"></span></a>
+                                        </li>
+                                    {% else %}
+                                        <li>
+                                            <a href="{{ path('products_by_category', {'id': category.id}) }}">{{ category.name }} <span class="badge pull-right"></span></a>
+                                        </li>
+                                    {% endif %}
                                 {% endfor %}
                                 <li>
                                     <a href="{{ path('userproducts_list') }}">Продукти на други потребители <span class="badge pull-right"></span></a>

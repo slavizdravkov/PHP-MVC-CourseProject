@@ -19,14 +19,17 @@ class UserProductsController extends Controller
 
         $categoryRepository = $this->getDoctrine()->getRepository(Category::class);
 
+        $promotionManager = $this->get('promotion_manager');
+        $categoriesInPromotion = $promotionManager->getCategoriesInPromotion();
+
         $categories = $categoryRepository->findAll();
-        $category = $categoryRepository->findOneBy(['name' => 'Продукти на потребители']);
+        //$category = $categoryRepository->findOneBy(['name' => 'Продукти на потребители']);
 
         return $this->render('shop/userproducts/list.html.twig',
             [
                 'products' => $userProducts,
                 'categories' => $categories,
-                'category' => $category
+                'categoriesInPromotion' => $categoriesInPromotion
             ]);
     }
 
@@ -41,10 +44,14 @@ class UserProductsController extends Controller
     {
         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
+        $promotionManager = $this->get('promotion_manager');
+        $categoriesInPromotion = $promotionManager->getCategoriesInPromotion();
+
         return $this->render('shop/userproducts/viewproduct.html.twig',
             [
                 'product' => $userProduct,
-                'categories' => $categories
+                'categories' => $categories,
+                'categoriesInPromotion' => $categoriesInPromotion
             ]);
     }
 }

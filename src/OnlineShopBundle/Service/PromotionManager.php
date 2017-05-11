@@ -175,4 +175,26 @@ class PromotionManager
 
         return 0;
     }
+
+    /**
+     * Връща всички категории в промоция
+     *
+     * @return Category[] array
+     */
+    public function getCategoriesInPromotion()
+    {
+        $categoriesInPromotion = [];
+
+        foreach ($this->getCategoryPromotions() as $categoryPromotion) {
+            $categories = $categoryPromotion->getCategories();
+
+            foreach ($categories as $category) {
+                if (!array_key_exists($category->getId(), $categoriesInPromotion)) {
+                    $categoriesInPromotion[$category->getId()] = $category;
+                }
+            }
+        }
+
+        return $categoriesInPromotion;
+    }
 }
